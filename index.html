@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="shortcut icon" href="src/img/icono.png" type="image/x-icon">
+</head>
+
+<body>
+  <header>
+    <ul class="menu menu-horizontal bg-base-300 rounded-box mt-3">
+      <li>
+        <a href="https://github.com/pblnahu1" rel="noopener noreferrer" class="" data-tip="GitHub" target="_blank">
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/in/pablo-nahuel-torrez-33a80324b/" rel="noopener noreferrer" class="" data-tip="LinkedIn" target="_blank">
+          <i class="fa-brands fa-linkedin"></i> LinkedIn
+        </a>
+      </li>
+      <li>
+        <a href="https://portfolio-dev-lilac.vercel.app/" rel="noopener noreferrer" class="" data-tip="Portfolio" target="_blank">
+          <i class="fa-solid fa-briefcase"></i> Portfolio
+        </a>
+      </li>
+    </ul>
+  </header>
+
+  <main>
+    <section id="task-input">
+      <input type="text" id="task-name" placeholder="Nueva Tarea">
+      <button id="add-task">Agregar</button>
+    </section>
+
+    <section id="color-picker">
+      <div id="color-options">
+        <div class="color-option" style="background-color: #FFB3BA" data-color="#FFB3BA"></div>
+        <div class="color-option" style="background-color: #FFDFBA" data-color="#FFDFBA"></div>
+        <div class="color-option" style="background-color: #FFFFBA" data-color="#FFFFBA"></div>
+        <div class="color-option" style="background-color: #BAFFC9" data-color="#BAFFC9"></div>
+        <div class="color-option" style="background-color: #BAE1FF" data-color="#BAE1FF"></div>
+      </div>
+    </section>
+
+    <section id="task-list">
+      <div class="content-text" id="content-text-id">
+        <h2 class="task-list-title text-3xl font-bold">Tareas</h2>
+        <div id="text_tareas"></div>
+      </div>
+      <ul id="tasks"></ul>
+    </section>
+  </main>
+
+  <script type="module" src="./src/main.js" defer></script>
+</body>
+
+</html>
