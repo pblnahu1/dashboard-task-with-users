@@ -3,7 +3,7 @@
 <img src="src/img/screen.png">
 
 ## Descripción:
-Crear una aplicación web para gestionar tareas personales o de equipo, donde puedas crear, editar, eliminar, y marcar tareas como completadas. Además, la aplicación permitirá visualizar el progreso general en un dashboard y gestionar usuarios para asignarles tareas.
+Crear una aplicación web para gestionar tareas personales o de equipo, donde puedas crear, editar, eliminar, y marcar tareas como completadas. Además, la aplicación permitirá visualizar el progreso general en un dashboard y gestionar usuarios para asignarles tareas (próximamente).
 
 ## Características del Proyecto:
 - Basic Syntax: Toda la lógica básica de la aplicación estará escrita en JavaScript moderno, utilizando la sintaxis más reciente.

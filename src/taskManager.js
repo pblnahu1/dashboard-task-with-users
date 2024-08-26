@@ -6,6 +6,14 @@ export class TaskManager {
         this.edicionTaskId = null; // para ver si se está editando
     }
 
+    // funcion para calcular el porcentaje de tareas completadas
+    calcularPorcentaje() {
+        const totalTasks = this.tasks.length;
+        const tasksCompletadas = this.tasks.filter(task => task.completed).length;
+        const porcentaje = totalTasks === 0 ? 0 : (tasksCompletadas / totalTasks) * 100;
+        return porcentaje.toFixed(2);//redondear a 2 decimales
+    }
+
     async addOrUpdateTask(name, color, userId) {
         if (this.edicionTaskId !== null) {
             const task = this.tasks.find(task => task.id === this.edicionTaskId);
@@ -50,14 +58,20 @@ export class TaskManager {
 
     renderTasks() {
         const taskList = document.getElementById("tasks");
-        const contentText = document.getElementById("text_tareas")
+        const contentText = document.getElementById("text_tareas");
+        const pendingTasks = document.getElementById("pending-tasks");
         
-        if (taskList !== null && contentText !== null) {
+        if (taskList && contentText) { // si taskList y contentText existen
             contentText.innerHTML = ''; // Limpio contenido de texto
             if (this.tasks.length === 0) {
                 contentText.innerHTML = 'No hay tareas. ¡Agregá una con tu color favorito!';
             } else {
-                contentText.innerHTML = `Completá, Editá y Eliminá tus tareas <br> Tienes ${this.tasks.length} ${this.tasks.length === 1 ? 'tarea' : 'tareas'} ${this.tasks.length === 1 ? 'pendiente' : 'pendientes'}`;
+                contentText.innerHTML = `Completá, Editá y Eliminá tus tareas`;
+                if (pendingTasks) { 
+                    pendingTasks.textContent = `Tienes ${this.tasks.length} ${this.tasks.length === 1 ? 'tarea' : 'tareas'} ${this.tasks.length === 1 ? 'pendiente' : 'pendientes'}`;
+                } else {
+                    console.log("El elemento de pendientes de tareas no existe");
+                }
             }
         } else {
             if (taskList === null) {
@@ -70,6 +84,15 @@ export class TaskManager {
         }
 
         taskList.innerHTML = '';
+
+        // mostrar el porcentaje de tareas completadas
+        const porcentajeCompletado = this.calcularPorcentaje();
+        const completadoBar = document.getElementById("completion-porcentage");
+        completadoBar.textContent=`Progreso General: ${porcentajeCompletado}% Completado`;
+
+        // actualizar la barra de progreso
+        const progressBar = document.getElementById("progress-bar");
+        progressBar.style.width = `${porcentajeCompletado}%`;
 
         const containerMainTask = document.createElement('div');
         containerMainTask.classList.add("container-main-task");
