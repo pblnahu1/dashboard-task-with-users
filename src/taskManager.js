@@ -6,12 +6,13 @@ export class TaskManager {
         this.edicionTaskId = null; // para ver si se está editando
     }
 
-    async addOrUpdateTask(name, color) {
+    async addOrUpdateTask(name, color, userId) {
         if (this.edicionTaskId !== null) {
             const task = this.tasks.find(task => task.id === this.edicionTaskId);
             if (task) {
                 task.name = name;
                 task.color = color;
+                task.userId = userId;
             }
             this.edicionTaskId = null;
         } else {
@@ -19,7 +20,8 @@ export class TaskManager {
                 id: this.tasks.length + 1,
                 name,
                 color: color || '#ffffff',
-                completed: false
+                completed: false,
+                userId
             };
             this.tasks.push(task);
         }
@@ -42,7 +44,6 @@ export class TaskManager {
         const task = this.tasks.find(task => task.id === id);
         if (task) {
             document.getElementById('task-name').value = task.name;
-            // document.getElementById('task-color').value = task.color;
             this.edicionTaskId = id;
         }
     }

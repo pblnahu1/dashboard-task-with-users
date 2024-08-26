@@ -1,6 +1,6 @@
 # Proyecto: Gestión de Tareas y Progreso
 
-![alt text](<img src="src/img/screen.png">)
+<img src="src/img/screen.png">
 
 ## Descripción:
 Crear una aplicación web para gestionar tareas personales o de equipo, donde puedas crear, editar, eliminar, y marcar tareas como completadas. Además, la aplicación permitirá visualizar el progreso general en un dashboard y gestionar usuarios para asignarles tareas.
@@ -36,8 +36,8 @@ Crear una aplicación web para gestionar tareas personales o de equipo, donde pu
 
 ## Módulos: 
 - taskManager.js: Módulo para la lógica de gestión de tareas.
-- userManager.js: Módulo para la lógica de gestión de usuarios.
-- utils.js: Funciones auxiliares para operaciones comunes.
+- userManager.js: Módulo para la lógica de gestión de usuarios. (opcional)
+- utils.js: Funciones auxiliares para operaciones comunes. (opcional)
 - main.js: Entrada principal de la aplicación, donde se inicializan los eventos y la lógica.
 
 ## Stack
@@ -52,4 +52,4 @@ Crear una aplicación web para gestionar tareas personales o de equipo, donde pu
 - Implementar la funcionalidad de eventos y manipulación del DOM.
 - Utilizar promesas y async/await para simular operaciones asíncronas.
 - Dividir la lógica en módulos y utilizar imports/exports.
-- Estilizar la aplicación con CSS.
+- Estilizar la aplicación con CSS o TailwindCSS/DaisyUI.
