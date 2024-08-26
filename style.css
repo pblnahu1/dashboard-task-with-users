@@ -1,3 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 html {
     color-scheme: light!important;
 }
@@ -23,6 +29,7 @@ header {
     align-items: center;
     justify-content: center;
     width: 100%;
+    padding: 0 1em;
 }
 
 header ul {
@@ -46,28 +53,33 @@ button {
 }
 
 #color-picker{
-    flex-direction: column;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
 }
 
-#task-input,
-#color-picker {
+#task-input {
     display: flex;
-    flex-direction: flex;
+    flex-direction: column;
     gap: 10px;
     justify-content: center;
-    align-items: center;
     /* margin-bottom: 1em; */
     width: 40%;
-    margin: 10px auto;
+    margin: 20px auto;
 }
 
 #task-name {
     width: 100%;
-    max-width: 350px;
+    /* max-width: 350px; */
     padding: 0.5em;
     font-size: 1em;
     border-radius: 20px;
     border: none;
+    overflow-wrap: break-word;
+    resize: none;
+    line-height: 1.5;
+    height: 110px;
 }
 
 #task-name:focus {
@@ -99,7 +111,7 @@ button {
     padding: 1em 2em;
     background: #fff;
     border-radius: 20px;
-    gap: 20px;
+    gap: 30px;
     justify-content: space-between;
 }
 
@@ -125,8 +137,10 @@ button {
 #task-list {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
+    width: 100%;
+    margin: 0 auto;
 }
 
 #tasks {
@@ -149,17 +163,13 @@ button {
 
 .container-main-task {
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    /* grid-template-rows: 1fr minmax(1em, auto); */
-    /* grid-auto-rows: minmax(100px, auto); */
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 16px;
 }
 
 .task-container-grid {
-    /* display: flex;
-    flex-direction: column; */
     width: 100%;
-    gap:5px;
+    margin: 0 auto;
 }
 
 .task-container {
@@ -188,8 +198,10 @@ button {
 
 #color-options {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 10px;
-    margin-bottom: 10px;
 }
 
 .color-option {
@@ -203,14 +215,33 @@ button {
 
 .color-option.selected {
     border: 2px solid black;
-    /* Indicador de selección */
 }
 
 /* Estilos responsive para dispositivos móviles */
-@media (max-width: 768px) {
+@media (max-width: 1200px){
+
+    header ul {
+        gap: 0px;
+    }
+
+    header ul > li{
+        font-size: 0.8em;
+    }
+
+    .container-main-task{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
     .container-main-task {
         grid-template-columns: repeat(2, 1fr);
-        /* 2 columnas en tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .container-main-task {
+        grid-template-columns: 1fr;
     }
 
     #task-input,
@@ -221,12 +252,15 @@ button {
     .container-buttons-task>button {
         margin: 5px;
     }
+
+    .task-container-grid{
+        width: auto;
+    }
 }
 
 @media (max-width: 480px) {
     .container-main-task {
         grid-template-columns: 1fr;
-        /* 1 columna en móviles */
     }
 
     #task-name {
@@ -241,7 +275,7 @@ button {
     #task-input,
     #color-picker {
         flex-direction: column;
-        gap: 5px;
+        gap: 20px;
     }
 
     .container-buttons-task {

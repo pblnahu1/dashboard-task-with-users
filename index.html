@@ -32,24 +32,28 @@
           <i class="fa-solid fa-briefcase"></i> Portfolio
         </a>
       </li>
+      <li>
+        <a href="/login" rel="noopener noreferrer" class="bg-gray-300 tooltip tooltip-bottom" data-tip="¡Registrate y guardá tus notas!" target="_parent">
+          <i class="fa-solid fa-user"></i> Registrarse
+        </a>
+      </li>
     </ul>
   </header>
 
   <main>
     <section id="task-input">
-      <input type="text" id="task-name" placeholder="Nueva Tarea">
-      <button id="add-task">Agregar</button>
-    </section>
-
-    <section id="color-picker">
-      <p>Elegir color</p>
-      <div id="color-options">
-        <div class="color-option" style="background-color: #FFB3BA" data-color="#FFB3BA"></div>
-        <div class="color-option" style="background-color: #FFDFBA" data-color="#FFDFBA"></div>
-        <div class="color-option" style="background-color: #FFFFBA" data-color="#FFFFBA"></div>
-        <div class="color-option" style="background-color: #BAFFC9" data-color="#BAFFC9"></div>
-        <div class="color-option" style="background-color: #BAE1FF" data-color="#BAE1FF"></div>
-      </div>
+      <textarea rows="2" id="task-name" placeholder="Nueva Tarea"></textarea>
+      <section id="color-picker">
+        <button id="add-task">Agregar</button>
+        <!-- <p>Elegir color</p> -->
+        <div id="color-options">
+          <div class="color-option" style="background-color: #FFB3BA" data-color="#FFB3BA"></div>
+          <div class="color-option" style="background-color: #FFDFBA" data-color="#FFDFBA"></div>
+          <div class="color-option" style="background-color: #FFFFBA" data-color="#FFFFBA"></div>
+          <div class="color-option" style="background-color: #BAFFC9" data-color="#BAFFC9"></div>
+          <div class="color-option" style="background-color: #BAE1FF" data-color="#BAE1FF"></div>
+        </div>
+      </section>
     </section>
 
     <section id="task-list">
