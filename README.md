@@ -1,5 +1,5 @@
 # Proyecto: Gestión de Tareas y Progreso
-
+## Imágen del Proyecto
 <img src="src/img/screen.png">
 
 ## Descripción:
