@@ -1,5 +1,6 @@
 # Proyecto: Gestión de Tareas y Progreso
 ## Imágen del Proyecto
+![alt text](src/img/screen.png "Muestra Panel")
 
 ## Descripción:
 Crear una aplicación web para gestionar tareas personales o de equipo, donde puedas crear, editar, eliminar, y marcar tareas como completadas. Además, la aplicación permitirá visualizar el progreso general en un dashboard y gestionar usuarios para asignarles tareas (próximamente).
