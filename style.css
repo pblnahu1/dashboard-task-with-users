@@ -6,6 +6,7 @@
 
 html {
     color-scheme: light!important;
+    scroll-behavior: smooth;
 }
 
 :root{
@@ -221,16 +222,31 @@ button {
 @media (max-width: 1200px){
 
     header ul {
-        gap: 0px;
+        gap: 5px;
+        justify-content: center;
     }
 
     header ul > li{
         font-size: 0.8em;
     }
 
+    .menu :where(li:not(.menu-title) > :not(ul, details, .menu-title, .btn)) {
+        padding-left: .5rem!important;
+        padding-right: .5rem!important;
+    }
+
+    header ul>li:last-of-type {
+        width: 100%;
+    }
+
     .container-main-task{
         grid-template-columns: repeat(3, 1fr);
     }
+
+    #sct-auth{
+        flex-direction: column;
+    }
+
 }
 
 @media (max-width: 992px) {
@@ -259,6 +275,7 @@ button {
 }
 
 @media (max-width: 480px) {
+
     .container-main-task {
         grid-template-columns: 1fr;
     }
