@@ -41,7 +41,7 @@ app.post('/register', (req, res) => {
     const sql = "INSERT INTO USUARIOS (NOMBRE_APELLIDO, EMAIL, PASSWORD) VALUES (?, ?, ?)";
     // manejo del resultado de inserción en la bd
     db.query(sql, [nombreApellido, email, password], (err, data) => {
-        if (err) return res.status(500).json({error: "Error en el servidor", details: err}); // manejo de error de servidor
+        if (err) return res.status(500).json({error: "Error en el servidor", details: err }); // manejo de error de servidor
         return res.status(200).json({ message: "¡Registrado Exitosamente!" }); // estado OK 200 y el mensaje
     });
 });
