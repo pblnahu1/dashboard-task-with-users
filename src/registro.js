@@ -5,17 +5,17 @@
 
 // import axios from 'axios';
 
-const infoConnection = document.getElementById("connection-status");
+const infoConnection = document.getElementById("connection-status-register");
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById("login-form");
+    const form = document.getElementById("register-form");
     // console.log(form === null);
     form.addEventListener("submit", (event) => {
         event.preventDefault();
-        const nombreApellido = document.getElementById("name-and-lastname").value;
+        const nombreApellido = document.getElementById("name-and-lastname-register").value;
         // console.log(nombreApellido)
-        const email = document.getElementById("email").value;
+        const email = document.getElementById("email-register").value;
         // console.log(email)
-        const password = document.getElementById("password").value;
+        const password = document.getElementById("password-register").value;
         // console.log(password)
 
         // hago una solicitud POST al servidor, con la URL del endpoint del servidor y los datos del usuario que se envían en la solicitud para registrar al usuario
