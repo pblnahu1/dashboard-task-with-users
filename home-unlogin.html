@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="Description" content="Gestor de Tareas con Autenticación de Usuarios">
+  <title>Task Manager</title>
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Accedo a la librería DaisyUI -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <!-- Accedo a la librería Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Accedo a la librería Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Icono de pestaña -->
+  <link rel="shortcut icon" href="src/img/icono.png" type="image/x-icon">
+  <!-- Axios para interactuar con el servidor -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <div id="loader" class="hidden fixed inset-0 bg-gray-200 bg-opacity-50 flex justify-center items-center">
+    <div class="loader border-t-4 border-b-4 border-blue-500 w-16 h-16 rounded-full animate-spin"></div>
+  </div>
+  <header>
+    <ul class="menu menu-horizontal rounded-box mt-3 mb-3 ">
+      <li>
+        <a href="https://github.com/pblnahu1" rel="noopener noreferrer" class="" data-tip="GitHub" target="_blank">
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/in/pablo-nahuel-torrez-33a80324b/" rel="noopener noreferrer" class=""
+          data-tip="LinkedIn" target="_blank">
+          <i class="fa-brands fa-linkedin"></i> LinkedIn
+        </a>
+      </li>
+      <li>
+        <a href="https://portfolio-dev-lilac.vercel.app/" rel="noopener noreferrer" class="" data-tip="Portfolio"
+          target="_blank">
+          <i class="fa-solid fa-briefcase"></i> Portfolio
+        </a>
+      </li>
+      <li>
+        <a href="index-auth.html" rel="noopener noreferrer" class="bg-gray-300 tooltip tooltip-bottom"
+          data-tip="¡Registrate y guardá tu progreso!">
+          <i class="fa-solid fa-user"></i> Registrarse
+        </a>
+      </li>
+    </ul>
+  </header>
+
+  <main class="my-4">
+    
+  </main>
+
+  <footer class="text-center text-gray-600 dark:text-gray-400 p-4 dark:bg-gray-800">
+    <p>Hecho por<a href="https://github.com/pblnahu1" target="_blank" rel="noopener noreferrer"> Pablo Torrez</a>
+    </p>
+    <p>2024 &copy; Todos los derechos reservados</p>
+  </footer>
+
+  <!-- <script type="module" src="./src/main.js" defer></script> -->
+  <!-- <script type="module" src="src/registro.js" defer></script> -->
+</body>
+
+</html>

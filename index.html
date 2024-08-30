@@ -24,6 +24,10 @@
 </head>
 
 <body>
+
+  <div id="loader" class="hidden fixed inset-0 bg-gray-200 bg-opacity-50 flex justify-center items-center">
+    <div class="loader border-t-4 border-b-4 border-blue-500 w-16 h-16 rounded-full animate-spin"></div>
+  </div>
   <header>
     <ul class="menu menu-horizontal rounded-box mt-3 mb-3 ">
       <li>
@@ -43,12 +47,12 @@
       </li>
       <li>
         <a
-        href="#sct-auth"
+        href="home-unlogin.html"
           rel="noopener noreferrer" 
           class="bg-gray-300 tooltip tooltip-bottom" 
-          data-tip="¡Registrate y guardá tu progreso!" 
+          data-tip="Nos vemos luego ✨" 
         >
-          <i class="fa-solid fa-user"></i> Registrarse
+          <i class="fa-solid fa-arrow-left"></i> Cerrar Sesión
       </a>
       </li>
     </ul>
@@ -86,63 +90,6 @@
       </div>
       <ul id="tasks"></ul>
     </section>
-
-    <section id="sct-auth" class="flex flex-row justify-center items-center">
-      <div class="container flex justify-center flex-col items-center mx-auto p-4" id="container-auth-register">
-        <span id="connection-status-register" class=""></span>
-        <h1 class="text-2xl font-bold mb-4">Registro</h1>
-        <div class="max-w-md w-full">
-          <form id="register-form" class="space-y-4">
-            <div>
-              <!-- <label for="name-and-lastname" class="block text-sm font-medium w-full">Nombre y Apellido</label> -->
-              <input type="text" id="name-and-lastname-register" class="form-control w-full rounded p-2" placeholder="Nombre y Apellido..." required>
-            </div>
-      
-            <div>
-              <!-- <label for="email" class="block text-sm font-medium w-full">Email</label> -->
-              <input type="email" id="email-register" class="form-control w-full rounded p-2" placeholder="Email..." required>
-            </div>
-      
-            <div>
-              <!-- <label for="password" class="block text-sm font-medium w-full">Password</label> -->
-              <input type="password" id="password-register" class="form-control w-full rounded p-2" placeholder="Password..." required>
-            </div>
-      
-            <!-- <div>
-               <label for="password-confirmation" class="block text-sm font-medium w-full">Confirmar Password</label>
-              <input type="password" id="password-confirmation" class="form-control w-full rounded p-2" placeholder="Confirmar Password..." required>
-            </div> -->
-      
-            <button type="submit" class="btn btn-primary w-full">Registrarse</button>
-          </form>
-        </div>
-      </div>
-
-      <div>
-        <span>O</span>
-      </div>
-
-      <div class="container flex justify-center flex-col items-center mx-auto p-4" id="container-auth-login">
-        <span id="connection-status-login" class=""></span>
-        <h1 class="text-2xl font-bold mb-4">Iniciar Sesión</h1>
-        <div class="max-w-md w-full">
-          <form id="login-form" class="space-y-4">
-            <div>
-              <!-- <label for="email" class="block text-sm font-medium w-full">Email</label> -->
-              <input type="email" id="email-login" class="form-control w-full rounded p-2" placeholder="Email..." required>
-            </div>
-      
-            <div>
-              <!-- <label for="password" class="block text-sm font-medium w-full">Password</label> -->
-              <input type="password" id="password-login" class="form-control w-full rounded p-2" placeholder="Password..." required>
-              <a href="#" class="text-sm text-blue-500 hover:text-blue-700">Olvide mi Password</a>
-            </div>
-      
-            <button type="submit" class="btn btn-primary w-full">Iniciar Sesion</button>
-          </form>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="text-center text-gray-600 dark:text-gray-400 p-4 dark:bg-gray-800">
@@ -151,7 +98,7 @@
   </footer>
 
   <script type="module" src="./src/main.js" defer></script>
-  <script type="module" src="src/registro.js" defer></script>
+  <!-- <script type="module" src="src/registro.js" defer></script> -->
 
 </body>
 
