@@ -30,38 +30,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById("password-register").value;
 
     // hago una solicitud POST al servidor, con la URL del endpoint del servidor y los datos del usuario que se envían en la solicitud para registrar al usuario
-    axios.post('http://localhost:8081/register', { nombreApellido, email, password })
+    axios.post('http://localhost:8081/register', { nombreApellido, email, password, mode: 'cors' })
       .then(res => {
-        console.log(res);
-        console.log(res.data);
+        console.log("Respuesta del Servidor: ", res);
+        console.log("Datos del Servidor: ", res.data);
 
         if (res.data.success) {
-          console.log(res.data);
+          console.log("Registro Exitoso: " + res.data.message);
 
           infoConnection.innerText = res.data.message;
 
-          const welcomeMessage = document.createElement("h2");
-          welcomeMessage.textContent = "¡Bienvenido " + nombreApellido + "!";
-          welcomeMessage.classList.add("text-2xl", "font-bold", "m-4");
+          // const welcomeMessage = document.createElement("h2");
+          // welcomeMessage.textContent = "¡Bienvenido " + nombreApellido + "!";
+          // welcomeMessage.classList.add("text-2xl", "font-bold", "m-4");
 
-          const registerContainer = document.getElementById('container-auth-register');
-          registerContainer.innerHTML = "";
-          registerContainer.appendChild(welcomeMessage);
+          // const registerContainer = document.getElementById('container-auth-register');
+          // registerContainer.innerHTML = "";
+          // registerContainer.appendChild(welcomeMessage);
 
-          const authSectionElement = document.getElementById('sct-auth');
-          authSectionElement.style.display = 'none';
           reiniceInput();
 
           setTimeout(() => {
-            window.location.href = '../index.html';
-          }, 2000)
+            reiniceInput();
+            console.log("redirigiendo a index.html ...");
+            window.location.href = './index.html';
+            // window.location.assign = './index.html';
+          }, 1000)
         } else {
           infoConnection.innerText = res.data.message || "Error al registrar el usuario";
+          console.log(infoConnection.innerText);
         }
       })
       .catch(err => {
-        console.error("Error al registrar el usuario. Su cuenta ya existe: ", err.response ? err.response.data : err.message);
-        infoConnection.innerText = err.response?.data?.message || "Error al registrar el usuario. Su cuenta ya existe";
+        console.error("Error al registrar el usuario: ", err.response ? err.response.data : err.message);
+        infoConnection.innerText = err.response?.data?.message || "Error al registrar el usuario.";
       })
       .finally(() => {
         fnAddLoader();

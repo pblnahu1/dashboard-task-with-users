@@ -24,8 +24,8 @@
 </head>
 
 <body>
-  <div id="loader" class="hidden fixed inset-0 bg-gray-200 bg-opacity-50 flex justify-center items-center">
-    <div class="loader border-t-4 border-b-4 border-blue-500 w-16 h-16 rounded-full animate-spin"></div>
+  <div id="loader" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="loader border-t-4 border-b-4 border-black-500 w-16 h-16 rounded-full animate-spin"></div>
   </div>
   <header>
     <ul class="menu menu-horizontal rounded-box mt-3 mb-3 ">
@@ -47,7 +47,7 @@
         </a>
       </li>
       <li>
-        <a href="index-auth.html" rel="noopener noreferrer" class="bg-gray-300 tooltip tooltip-bottom"
+        <a href="index-auth.html" rel="noopener noreferrer" class="link-pages bg-gray-300 tooltip tooltip-bottom"
           data-tip="¡Registrate y guardá tu progreso!">
           <i class="fa-solid fa-user"></i> Registrarse
         </a>
@@ -55,8 +55,20 @@
     </ul>
   </header>
 
-  <main class="my-4">
-    
+  <main class="">
+    <div class="hero rounded-3xl min-h-[500px]"
+      style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)">
+      <div class="hero-overlay bg-opacity-60 rounded-3xl"></div>
+      <div class="hero-content text-gray-200 text-center py-16">
+        <div class="max-w-md">
+          <h1 class="mb-5 text-5xl font-bold">Gestor de Tareas</h1>
+          <p class="mb-5">
+            ¡Registrate para poder gestionar tus tareas de forma eficiente y organizada!
+          </p>
+          <a class="btn btn-primary" href="index-auth.html" rel="noopener noreferrer">¡Vamos!</a>
+        </div>
+      </div>
+    </div>
   </main>
 
   <footer class="text-center text-gray-600 dark:text-gray-400 p-4 dark:bg-gray-800">
@@ -67,6 +79,7 @@
 
   <!-- <script type="module" src="./src/main.js" defer></script> -->
   <!-- <script type="module" src="src/registro.js" defer></script> -->
+  <script src="src/loader.js" defer></script>
 </body>
 
 </html>

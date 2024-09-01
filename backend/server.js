@@ -12,8 +12,15 @@ const mysql = require('mysql')
 const cors = require('cors')
 
 const app = express() // inicializo una instancia para ejecutar el servidor
+const PORT = 8081;
 app.use(express.json()) // middleware para parsear el body (sin este middleware el body seria undefined)
-app.use(cors()) // para habilitar CORS y permite que otros origenes consuman el servidor
+app.use(cors({
+    origin: '*',
+    // origin: 'http://localhost:3000',
+    // origin: 'http://localhost:8081',
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    // credentials: true
+})); // para habilitar CORS y permite que otros origenes consuman el servidor
 
 // conexion a la db
 const db = mysql.createConnection({
@@ -29,24 +36,31 @@ app.post('/register', (req, res) => {
     // manejo de errores en el endpoint de registro (`/register`)
     // si el usuario no envia todos los datos, lanza errores de estados
     if (!nombreApellido || !email || !password) {
-        if (!nombreApellido) return res.status(400).json({ error: "El nombre es obligatorio" });
+        if (!nombreApellido) return res.status(400).json({success: false, error: "El nombre es obligatorio" });
 
-        if (!email) return res.status(400).json({ error: "El Email es obligatorio" });
+        if (!email) return res.status(400).json({success: false, error: "El Email es obligatorio" });
 
-        if (!password) return res.status(400).json({ error: "La contraseña es obligatoria" });
+        if (!password) return res.status(400).json({success: false, error: "La contraseña es obligatoria" });
 
-        if (password.length < 6) return res.status(400).json({ error: "La contraseña debe tener al menos 6 caracteres" });
+        if (password.length < 6) return res.status(400).json({success: false, error: "La contraseña debe tener al menos 6 caracteres" });
     }
 
     const sql = "INSERT INTO USUARIOS (NOMBRE_APELLIDO, EMAIL, PASSWORD) VALUES (?, ?, ?)";
     // manejo del resultado de inserción en la bd
     db.query(sql, [nombreApellido, email, password], (err, data) => {
-        if (err) return res.status(500).json({error: "Error en el servidor", details: err }); // manejo de error de servidor
-        return res.status(200).json({ message: "¡Registrado Exitosamente!" }); // estado OK 200 y el mensaje
+        if (err) {
+            console.error("Error en la inserción: ",err);
+           return res.status(500).json({success: false, error: "Error en el servidor", details: err });
+        } // manejo de error de servidor
+        return res.status(200).json({success:true, message: "¡Registrado Exitosamente!" }); // estado OK 200 y el mensaje
     });
 });
 
 // probar el server
-app.listen(8081, () => {
-    console.log("Server in port 8081...");
+app.listen(PORT, () => {
+    if (app && typeof app.listen === 'function') {
+        console.log(`Server running on port ${PORT}`);
+    } else {
+        console.error('Failed to start server on port ', PORT);
+    }
 });
