@@ -56,6 +56,23 @@ app.post('/register', (req, res) => {
     });
 });
 
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+        if (!email) return res.status(400).json({ success: false, error: "El Email es obligatorio" });
+        if (!password) return res.status(400).json({ success: false, error: "La contraseña es obligatoria" });
+    }
+
+    const sql = "SELECT * FROM USUARIOS WHERE EMAIL = ? AND PASSWORD = ?";
+    db.query(sql, [email, password], (err, data) => {
+        if (err) {
+            console.error("Error en la selección: ", err);
+            return res.status(500).json({ success: false, error: "Error en el servidor", details: err });
+        }
+        return res.status(200).json({ success: true, message: "¡Bienvenido!" });
+    });
+});
+
 // probar el server
 app.listen(PORT, () => {
     if (app && typeof app.listen === 'function') {
