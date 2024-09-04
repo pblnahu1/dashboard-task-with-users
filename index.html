@@ -46,17 +46,45 @@
           <i class="fa-solid fa-briefcase"></i> Portfolio
         </a>
       </li>
-      <li>
-        <a
-        href="home-unlogin.html"
-          rel="noopener noreferrer" 
-          class="link-pages bg-gray-300 tooltip tooltip-bottom" 
-          data-tip="Nos vemos luego ✨" 
-        >
-          <i class="fa-solid fa-arrow-left"></i> Cerrar Sesión
-      </a>
-      </li>
     </ul>
+    <!-- Menú desplegable de bienvenida. Esto es a modo de ejemplo de cómo se tendría que ver... así que tengo que implementarlo pero desde el lado del servidor, ya que ya tengo los datos de mis usuarios, solo manipularlos... -->
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn m-1 rounded-3xl" id="user-logged">¡Hola Pablo! <img class="rounded-3xl w-7 h-7" src="https://www.github.com/pblnahu1.png" alt="GitHub"></div>
+      <div tabindex="0" class="dropdown-content card card-compact bg-primary text-primary-content z-[1] w-96 p-1 shadow">
+        <div class="card-body">
+          <h3 class="card-title">Gestioná tu cuenta</h3>
+          <p>Cambia tu contraseña, borrar tu cuenta o cerrar la sesión.</p>
+          
+          <ul class="menu rounded-box">
+            <li>
+              <a href="#" rel="noopener noreferrer" class="">
+                <i class="fa-solid fa-key"></i> Cambiar o recuperar Contraseña
+              </a>
+            </li>
+
+            <li>
+              <a href="#" rel="noopener noreferrer" class="hover:text-red-600 hover:bg-red-100">
+                <i class="fa-solid fa-trash"></i> Borrar Cuenta
+              </a>
+            </li>
+
+            <li>
+              <a href="#" rel="noopener noreferrer" class="">
+                <i class="fa-solid fa-gavel"></i> Términos y Condiciones
+              </a>
+            </li>
+
+            <li>
+              <a href="home-unlogin.html" rel="noopener noreferrer" class="link-pages bg-gray-300 tooltip tooltip-bottom"
+                data-tip="Nos vemos luego ✨">
+                <i class="fa-solid fa-arrow-left"></i> Cerrar Sesión
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
   </header>
 
   <main class="my-4">
