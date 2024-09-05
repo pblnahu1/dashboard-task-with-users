@@ -3,21 +3,15 @@
  * Lado del cliente (Frontend)
 */
 
+import userLogged from "./userLogged.mjs";
+
 // import axios from 'axios';
 
 const fnAddLoader = () => document.getElementById('loader').classList.add('hidden');
-
 const fnRemoveLoader = () => document.getElementById('loader').classList.remove('hidden');
 
-const reiniceInputRegister = () => {
-  document.getElementById("name-and-lastname-register").value = '';
-  document.getElementById("email-register").value = '';
-  document.getElementById("password-register").value = '';
-}
-
-const reiniceInputLogin = () => {
-  document.getElementById("email-login").value = '';
-  document.getElementById("password-login").value = '';
+const resetForm = (formId) => {
+  document.getElementById(formId).reset();
 }
 
 const infoConnection = document.getElementById("connection-status-register");
@@ -28,103 +22,98 @@ document.addEventListener('DOMContentLoaded', () => {
   const formRegister = document.getElementById("register-form");
   const formLogin = document.getElementById("login-form");
 
-  formRegister.addEventListener("submit", (event) => {
-    event.preventDefault();
-    fnRemoveLoader();
+  if (formRegister) {
+    formRegister.addEventListener("submit", (event) => {
+      event.preventDefault();
+      fnRemoveLoader();
+  
+      const nombreApellido = document.getElementById("name-and-lastname-register").value;
+      const email = document.getElementById("email-register").value;
+      const password = document.getElementById("password-register").value;
+  
+      // hago una solicitud POST al servidor, con la URL del endpoint del servidor y los datos del usuario que se envían en la solicitud para registrar al usuario
+      axios.post('http://localhost:8081/register', { nombreApellido, email, password, mode: 'cors' })
+        .then(res => {
+          console.log("Respuesta del Servidor: ", res);
+          console.log("Datos del Servidor: ", res.data);
 
-    const nombreApellido = document.getElementById("name-and-lastname-register").value;
-    const email = document.getElementById("email-register").value;
-    const password = document.getElementById("password-register").value;
+          if (res.data.success) {
+            localStorage.setItem('nombreApellido', nombreApellido);
+            console.log("Registro Exitoso: " + res.data.message);
 
-    // hago una solicitud POST al servidor, con la URL del endpoint del servidor y los datos del usuario que se envían en la solicitud para registrar al usuario
-    axios.post('http://localhost:8081/register', { nombreApellido, email, password, mode: 'cors' })
-      .then(res => {
-        console.log("Respuesta del Servidor: ", res);
-        console.log("Datos del Servidor: ", res.data);
+            if (infoConnection) {
+              infoConnection.innerText = res.data.message;
+            }
 
-        if (res.data.success) {
-          console.log("Registro Exitoso: " + res.data.message);
+            resetForm('register-form');
 
-          infoConnection.innerText = res.data.message;
+            setTimeout(() => {
+              window.location.href = './dashboard-tasks.html';
+            }, 2000)
+          } else {
+            if (infoConnection) {
+              infoConnection.innerText = res.data.message || "Error al registrar el usuario";
+            }
+            console.log(infoConnection?.innerText);
+          }
+        })
+        .catch(err => {
+          console.error("Error al registrar el usuario: ", err.response ? err.response.data : err.message);
+          if (infoConnection) {
+            infoConnection.innerText = err.response?.data?.message || "Error al registrar el usuario.";
+          }
+        })
+        .finally(() =>  fnAddLoader());
+    });
+  }
 
-          // const welcomeMessage = document.createElement("h2");
-          // welcomeMessage.textContent = "¡Bienvenido " + nombreApellido + "!";
-          // welcomeMessage.classList.add("text-2xl", "font-bold", "m-4");
 
-          // const registerContainer = document.getElementById('container-auth-register');
-          // registerContainer.innerHTML = "";
-          // registerContainer.appendChild(welcomeMessage);
+  if (formLogin) {
+    formLogin.addEventListener("submit", (event) => {
+      event.preventDefault();
+      fnRemoveLoader();
+  
+      const email = document.getElementById("email-login").value;
+      const password = document.getElementById("password-login").value;
+  
+      axios.post('http://localhost:8081/login', { email, password, mode: 'cors' })
+        .then(res => {
+          console.log("Respuesta del Servidor: ", res);
+          console.log("Datos del Servidor: ", res.data);
+          if (res.data.success) {
+            const { nombreApellido } = res.data;
+            if (nombreApellido) {
+              localStorage.setItem('nombreApellido', nombreApellido);
+              console.log("Login Exitoso: " + res.data.message);
+            } else {
+              console.error("Error al iniciar sesión: ", res.data.message);
+            }
 
-          reiniceInputRegister();
+            if (infoConnection2) {
+              infoConnection2.innerText = res.data.message;
+            }
+            
+            resetForm('login-form');
 
-          setTimeout(() => {
-            reiniceInputRegister();
-            console.log("redirigiendo a dashboard-tasks.html ...");
-            window.location.href = './dashboard-tasks.html';
-            // window.location.assign = './dashboard-tasks.html';
-          }, 1000)
+            setTimeout(() => {
+              window.location.href = './dashboard-tasks.html';
+            }, 2000);
+          } else {
+            if (infoConnection2) {
+              infoConnection2.innerText = res.data.message || "Error al iniciar sesión";
+            }
+            console.log(infoConnection2?.innerText);
+          }
+        })
+        .catch(err => {
+          console.error("Error al iniciar sesión: ", err.response ? err.response.data : err.message);
+          if (infoConnection2) {
+            infoConnection2.innerText = err.response?.data?.message || "Error al iniciar sesión.";
+          }
+        })
+        .finally(() => fnAddLoader());
+    });
+  }
 
-          // fnLoaderPath(reiniceInputRegister());
-        } else {
-          infoConnection.innerText = res.data.message || "Error al registrar el usuario";
-          console.log(infoConnection.innerText);
-        }
-      })
-      .catch(err => {
-        console.error("Error al registrar el usuario: ", err.response ? err.response.data : err.message);
-        infoConnection.innerText = err.response?.data?.message || "Error al registrar el usuario.";
-      })
-      .finally(() => {
-        fnAddLoader();
-      });
-  });
-
-  formLogin.addEventListener("submit", (event) => {
-    event.preventDefault();
-    fnRemoveLoader();
-
-    const email = document.getElementById("email-login").value;
-    const password = document.getElementById("password-login").value;
-
-    axios.post('http://localhost:8081/login', { email, password, mode: 'cors' })
-      .then(res => {
-        console.log("Respuesta del Servidor: ", res);
-        console.log("Datos del Servidor: ", res.data);
-        if (res.data.success) {
-          console.log("Login Exitoso: " + res.data.message);
-          infoConnection2.innerText = res.data.message;
-
-          reiniceInputLogin();
-
-          setTimeout(() => {
-            reiniceInputLogin();
-            console.log("redirigiendo a dashboard-tasks.html ...");
-            window.location.href = './dashboard-tasks.html';
-            // window.location.assign = './dashboard-tasks.html';
-          }, 2000)
-
-          // fnLoaderPath(reiniceInputLogin());
-        } else {
-          infoConnection2.innerText = res.data.message || "Error al iniciar sesión";
-          console.log(infoConnection2.innerText);
-        }
-      })
-      .catch(err => {
-        console.error("Error al iniciar sesión: ", err.response ? err.response.data : err.message);
-        infoConnection2.innerText = err.response?.data?.message || "Error al iniciar sesión.";
-      })
-      .finally(() => {
-        fnAddLoader();
-      });
-  });
+  userLogged("name-user-logged", "nombreApellido");
 });
-
-// const fnLoaderPath = () => {
-//   const load = setTimeout(() => {
-//     console.log("redirigiendo a index.html ...");
-//     window.location.href = './index.html';
-//     // window.location.assign = './index.html';
-//   }, 1000)
-
-//   return load;
-// }

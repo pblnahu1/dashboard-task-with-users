@@ -6,20 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="Description" content="Gestor de Tareas con Autenticación de Usuarios">
+  
   <title>Task Manager</title>
-  <!-- Estilos CSS -->
+  
   <link rel="stylesheet" href="style.css">
-  <!-- Accedo a la librería DaisyUI -->
+  
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
-  <!-- Accedo a la librería Tailwind -->
+  
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Accedo a la librería Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-  integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-  crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Icono de pestaña -->
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
   <link rel="shortcut icon" href="src/img/icono.png" type="image/x-icon">
-  <!-- Axios para interactuar con el servidor -->
+  
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
@@ -49,7 +48,10 @@
     </ul>
     <!-- Menú desplegable de bienvenida. Esto es a modo de ejemplo de cómo se tendría que ver... así que tengo que implementarlo pero desde el lado del servidor, ya que ya tengo los datos de mis usuarios, solo manipularlos... -->
     <div class="dropdown">
-      <div tabindex="0" role="button" class="btn m-1 rounded-3xl" id="user-logged">¡Hola Pablo! <img class="rounded-3xl w-7 h-7" src="https://www.github.com/pablotorrez15.png" alt="GitHub"></div>
+      <div tabindex="0" role="button" class="btn m-1 rounded-3xl" id="user-logged">
+        <span id="name-user-logged"></span>
+        <img class="rounded-3xl w-7 h-7" src="https://www.github.com/pablotorrez15.png" alt="GitHub">
+      </div>
       <div tabindex="0" class="dropdown-content card card-compact bg-primary text-primary-content z-[1] w-96 p-1 shadow">
         <div class="card-body">
           <h3 class="card-title">Gestioná tu cuenta</h3>
@@ -92,7 +94,7 @@
       <textarea rows="2" id="task-name" placeholder="Nueva Tarea"></textarea>
       <section id="color-picker">
         <button id="add-task">Agregar</button>
-        <!-- <p>Elegir color</p> -->
+    
         <div id="color-options">
           <div class="color-option" style="background-color: #FFB3BA" data-color="#FFB3BA"></div>
           <div class="color-option" style="background-color: #FFDFBA" data-color="#FFDFBA"></div>
@@ -127,8 +129,9 @@
   </footer>
 
   <script type="module" src="./src/main.js" defer></script>
-  <!-- <script type="module" src="src/registro.js" defer></script> -->
   <script src="src/loader.js" defer></script>
+  <script type="module" src="src/registro.js" defer></script>
+
 </body>
 
 </html>
