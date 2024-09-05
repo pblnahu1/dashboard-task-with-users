@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="Description" content="Gestor de Tareas con Autenticación de Usuarios">
+  <title>Task Manager</title>
+  <!-- Estilos CSS -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Accedo a la librería DaisyUI -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <!-- Accedo a la librería Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Accedo a la librería Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+  integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Icono de pestaña -->
+  <link rel="shortcut icon" href="src/img/icono.png" type="image/x-icon">
+  <!-- Axios para interactuar con el servidor -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+  <div id="loader" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="loader border-t-4 border-b-4 border-black-500 w-16 h-16 rounded-full animate-spin"></div>
+  </div>
+
+  <header>
+    <ul class="menu menu-horizontal rounded-box mt-3 mb-3 ">
+      <li>
+        <a href="https://github.com/pblnahu1" rel="noopener noreferrer" class="" data-tip="GitHub" target="_blank">
+          <i class="fa-brands fa-github"></i> GitHub
+        </a>
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/in/pablo-nahuel-torrez-33a80324b/" rel="noopener noreferrer" class="" data-tip="LinkedIn" target="_blank">
+          <i class="fa-brands fa-linkedin"></i> LinkedIn
+        </a>
+      </li>
+      <li>
+        <a href="https://portfolio-dev-lilac.vercel.app/" rel="noopener noreferrer" class="" data-tip="Portfolio" target="_blank">
+          <i class="fa-solid fa-briefcase"></i> Portfolio
+        </a>
+      </li>
+    </ul>
+    <!-- Menú desplegable de bienvenida. Esto es a modo de ejemplo de cómo se tendría que ver... así que tengo que implementarlo pero desde el lado del servidor, ya que ya tengo los datos de mis usuarios, solo manipularlos... -->
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn m-1 rounded-3xl" id="user-logged">¡Hola Pablo! <img class="rounded-3xl w-7 h-7" src="https://www.github.com/pablotorrez15.png" alt="GitHub"></div>
+      <div tabindex="0" class="dropdown-content card card-compact bg-primary text-primary-content z-[1] w-96 p-1 shadow">
+        <div class="card-body">
+          <h3 class="card-title">Gestioná tu cuenta</h3>
+          <p>Cambia tu contraseña, borrar tu cuenta o cerrar la sesión.</p>
+          
+          <ul class="menu rounded-box">
+            <li>
+              <a href="#" rel="noopener noreferrer" class="">
+                <i class="fa-solid fa-key"></i> Cambiar o recuperar Contraseña
+              </a>
+            </li>
+
+            <li>
+              <a href="#" rel="noopener noreferrer" class="hover:text-red-600 hover:bg-red-100">
+                <i class="fa-solid fa-trash"></i> Borrar Cuenta
+              </a>
+            </li>
+
+            <li>
+              <a href="#" rel="noopener noreferrer" class="">
+                <i class="fa-solid fa-gavel"></i> Términos y Condiciones
+              </a>
+            </li>
+
+            <li>
+              <a href="index.html" rel="noopener noreferrer" class="link-pages bg-gray-300 tooltip tooltip-bottom"
+                data-tip="Nos vemos luego ✨">
+                <i class="fa-solid fa-arrow-left"></i> Cerrar Sesión
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+  <main class="my-4">
+    <section id="task-input">
+      <textarea rows="2" id="task-name" placeholder="Nueva Tarea"></textarea>
+      <section id="color-picker">
+        <button id="add-task">Agregar</button>
+        <!-- <p>Elegir color</p> -->
+        <div id="color-options">
+          <div class="color-option" style="background-color: #FFB3BA" data-color="#FFB3BA"></div>
+          <div class="color-option" style="background-color: #FFDFBA" data-color="#FFDFBA"></div>
+          <div class="color-option" style="background-color: #FFFFBA" data-color="#FFFFBA"></div>
+          <div class="color-option" style="background-color: #BAFFC9" data-color="#BAFFC9"></div>
+          <div class="color-option" style="background-color: #BAE1FF" data-color="#BAE1FF"></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="task-list">
+      <div class="content-text" id="content-text-id">
+        <div id="tasks-title-container">
+          <h2 class="task-list-title text-3xl font-bold">Tareas</h2>
+          <div id="text_tareas"></div>
+        </div>
+        <div id="progress">
+          <p id="completion-porcentage">Progreso General: 0% Completado</p>
+          <div id="pending-tasks"></div>
+          <div id="progress-container">
+            <div id="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+      <ul id="tasks"></ul>
+    </section>
+  </main>
+
+  <footer class="text-center text-gray-600 dark:text-gray-400 p-4 dark:bg-gray-800">
+    <p>Hecho por<a href="https://github.com/pblnahu1" target="_blank" rel="noopener noreferrer"> Pablo Torrez</a></p>
+    <p>2024 &copy; Todos los derechos reservados</p>
+  </footer>
+
+  <script type="module" src="./src/main.js" defer></script>
+  <!-- <script type="module" src="src/registro.js" defer></script> -->
+  <script src="src/loader.js" defer></script>
+</body>
+
+</html>

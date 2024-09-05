@@ -15,8 +15,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Accedo a la librería Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-  integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-  crossorigin="anonymous" referrerpolicy="no-referrer" />
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Icono de pestaña -->
   <link rel="shortcut icon" href="src/img/icono.png" type="image/x-icon">
   <!-- Axios para interactuar con el servidor -->
@@ -24,11 +24,9 @@
 </head>
 
 <body>
-
   <div id="loader" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
     <div class="loader border-t-4 border-b-4 border-black-500 w-16 h-16 rounded-full animate-spin"></div>
   </div>
-
   <header>
     <ul class="menu menu-horizontal rounded-box mt-3 mb-3 ">
       <li>
@@ -37,96 +35,49 @@
         </a>
       </li>
       <li>
-        <a href="https://www.linkedin.com/in/pablo-nahuel-torrez-33a80324b/" rel="noopener noreferrer" class="" data-tip="LinkedIn" target="_blank">
+        <a href="https://www.linkedin.com/in/pablo-nahuel-torrez-33a80324b/" rel="noopener noreferrer" class=""
+          data-tip="LinkedIn" target="_blank">
           <i class="fa-brands fa-linkedin"></i> LinkedIn
         </a>
       </li>
       <li>
-        <a href="https://portfolio-dev-lilac.vercel.app/" rel="noopener noreferrer" class="" data-tip="Portfolio" target="_blank">
+        <a href="https://portfolio-dev-lilac.vercel.app/" rel="noopener noreferrer" class="" data-tip="Portfolio"
+          target="_blank">
           <i class="fa-solid fa-briefcase"></i> Portfolio
         </a>
       </li>
+      <li>
+        <a href="index-auth.html" rel="noopener noreferrer" class="link-pages bg-gray-300 tooltip tooltip-bottom"
+          data-tip="¡Registrate y guardá tu progreso!">
+          <i class="fa-solid fa-user"></i> Registrarse
+        </a>
+      </li>
     </ul>
-    <!-- Menú desplegable de bienvenida. Esto es a modo de ejemplo de cómo se tendría que ver... así que tengo que implementarlo pero desde el lado del servidor, ya que ya tengo los datos de mis usuarios, solo manipularlos... -->
-    <div class="dropdown">
-      <div tabindex="0" role="button" class="btn m-1 rounded-3xl" id="user-logged">¡Hola Pablo! <img class="rounded-3xl w-7 h-7" src="https://www.github.com/pblnahu1.png" alt="GitHub"></div>
-      <div tabindex="0" class="dropdown-content card card-compact bg-primary text-primary-content z-[1] w-96 p-1 shadow">
-        <div class="card-body">
-          <h3 class="card-title">Gestioná tu cuenta</h3>
-          <p>Cambia tu contraseña, borrar tu cuenta o cerrar la sesión.</p>
-          
-          <ul class="menu rounded-box">
-            <li>
-              <a href="#" rel="noopener noreferrer" class="">
-                <i class="fa-solid fa-key"></i> Cambiar o recuperar Contraseña
-              </a>
-            </li>
+  </header>
 
-            <li>
-              <a href="#" rel="noopener noreferrer" class="hover:text-red-600 hover:bg-red-100">
-                <i class="fa-solid fa-trash"></i> Borrar Cuenta
-              </a>
-            </li>
-
-            <li>
-              <a href="#" rel="noopener noreferrer" class="">
-                <i class="fa-solid fa-gavel"></i> Términos y Condiciones
-              </a>
-            </li>
-
-            <li>
-              <a href="home-unlogin.html" rel="noopener noreferrer" class="link-pages bg-gray-300 tooltip tooltip-bottom"
-                data-tip="Nos vemos luego ✨">
-                <i class="fa-solid fa-arrow-left"></i> Cerrar Sesión
-              </a>
-            </li>
-          </ul>
+  <main class="">
+    <div class="hero rounded-3xl min-h-[500px]"
+      style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)">
+      <div class="hero-overlay bg-opacity-60 rounded-3xl"></div>
+      <div class="hero-content text-gray-200 text-center py-16">
+        <div class="max-w-md">
+          <h1 class="mb-5 text-5xl font-bold">Gestor de Tareas</h1>
+          <p class="mb-5">
+            ¡Registrate para poder gestionar tus tareas de forma eficiente y organizada!
+          </p>
+          <a class="btn btn-primary" href="index-auth.html" rel="noopener noreferrer">¡Vamos!</a>
         </div>
       </div>
     </div>
-  
-  </header>
-
-  <main class="my-4">
-    <section id="task-input">
-      <textarea rows="2" id="task-name" placeholder="Nueva Tarea"></textarea>
-      <section id="color-picker">
-        <button id="add-task">Agregar</button>
-        <!-- <p>Elegir color</p> -->
-        <div id="color-options">
-          <div class="color-option" style="background-color: #FFB3BA" data-color="#FFB3BA"></div>
-          <div class="color-option" style="background-color: #FFDFBA" data-color="#FFDFBA"></div>
-          <div class="color-option" style="background-color: #FFFFBA" data-color="#FFFFBA"></div>
-          <div class="color-option" style="background-color: #BAFFC9" data-color="#BAFFC9"></div>
-          <div class="color-option" style="background-color: #BAE1FF" data-color="#BAE1FF"></div>
-        </div>
-      </section>
-    </section>
-
-    <section id="task-list">
-      <div class="content-text" id="content-text-id">
-        <div id="tasks-title-container">
-          <h2 class="task-list-title text-3xl font-bold">Tareas</h2>
-          <div id="text_tareas"></div>
-        </div>
-        <div id="progress">
-          <p id="completion-porcentage">Progreso General: 0% Completado</p>
-          <div id="pending-tasks"></div>
-          <div id="progress-container">
-            <div id="progress-bar"></div>
-          </div>
-        </div>
-      </div>
-      <ul id="tasks"></ul>
-    </section>
   </main>
 
   <footer class="text-center text-gray-600 dark:text-gray-400 p-4 dark:bg-gray-800">
-    <p>Hecho por<a href="https://github.com/pblnahu1" target="_blank" rel="noopener noreferrer"> Pablo Torrez</a></p>
+    <p>Hecho por<a href="https://github.com/pblnahu1" target="_blank" rel="noopener noreferrer"> Pablo Torrez</a>
+    </p>
     <p>2024 &copy; Todos los derechos reservados</p>
   </footer>
 
-  <script type="module" src="./src/main.js" defer></script>
+  <!-- <script type="module" src="./src/main.js" defer></script> -->
   <!-- <script type="module" src="src/registro.js" defer></script> -->
   <script src="src/loader.js" defer></script>
 </body>

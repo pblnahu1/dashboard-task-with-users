@@ -59,9 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
           setTimeout(() => {
             reiniceInputRegister();
-            console.log("redirigiendo a index.html ...");
-            window.location.href = './index.html';
-            // window.location.assign = './index.html';
+            console.log("redirigiendo a dashboard-tasks.html ...");
+            window.location.href = './dashboard-tasks.html';
+            // window.location.assign = './dashboard-tasks.html';
           }, 1000)
 
           // fnLoaderPath(reiniceInputRegister());
@@ -98,9 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
           setTimeout(() => {
             reiniceInputLogin();
-            console.log("redirigiendo a index.html ...");
-            window.location.href = './index.html';
-            // window.location.assign = './index.html';
+            console.log("redirigiendo a dashboard-tasks.html ...");
+            window.location.href = './dashboard-tasks.html';
+            // window.location.assign = './dashboard-tasks.html';
           }, 2000)
 
           // fnLoaderPath(reiniceInputLogin());
