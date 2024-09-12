@@ -2,8 +2,7 @@
 /**
  * Lado del cliente (Frontend)
 */
-
-import userLogged from "./userLogged.mjs";
+import userLogged, {saveUserToLS} from "./userLogged.mjs";
 
 // import axios from 'axios';
 
@@ -38,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log("Datos del Servidor: ", res.data);
 
           if (res.data.success) {
-            localStorage.setItem('nombreApellido', nombreApellido);
+            // localStorage.setItem('nombreApellido', nombreApellido);
+            saveUserToLS(email, nombreApellido);
             console.log("Registro Exitoso: " + res.data.message);
 
             if (infoConnection) {
@@ -54,11 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (infoConnection) {
               infoConnection.innerText = res.data.message || "Error al registrar el usuario";
             }
-            console.log(infoConnection?.innerText);
           }
         })
         .catch(err => {
-          console.error("Error al registrar el usuario: ", err.response ? err.response.data : err.message);
           if (infoConnection) {
             infoConnection.innerText = err.response?.data?.message || "Error al registrar el usuario.";
           }
@@ -78,12 +76,13 @@ document.addEventListener('DOMContentLoaded', () => {
   
       axios.post('http://localhost:8081/login', { email, password, mode: 'cors' })
         .then(res => {
-          console.log("Respuesta del Servidor: ", res);
-          console.log("Datos del Servidor: ", res.data);
+          // console.log("Respuesta del Servidor: ", res);
+          // console.log("Datos del Servidor: ", res.data);
           if (res.data.success) {
             const { nombreApellido } = res.data;
             if (nombreApellido) {
-              localStorage.setItem('nombreApellido', nombreApellido);
+              // localStorage.setItem('nombreApellido', nombreApellido);
+              saveUserToLS(email, nombreApellido);
               console.log("Login Exitoso: " + res.data.message);
             } else {
               console.error("Error al iniciar sesión: ", res.data.message);
@@ -102,11 +101,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (infoConnection2) {
               infoConnection2.innerText = res.data.message || "Error al iniciar sesión";
             }
-            console.log(infoConnection2?.innerText);
           }
         })
         .catch(err => {
-          console.error("Error al iniciar sesión: ", err.response ? err.response.data : err.message);
           if (infoConnection2) {
             infoConnection2.innerText = err.response?.data?.message || "Error al iniciar sesión.";
           }
@@ -115,5 +112,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  userLogged("name-user-logged", "nombreApellido");
+  userLogged("name-user-logged");
 });

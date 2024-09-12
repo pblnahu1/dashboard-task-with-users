@@ -69,7 +69,17 @@ app.post('/login', (req, res) => {
             console.error("Error en la selección: ", err);
             return res.status(500).json({ success: false, error: "Error en el servidor", details: err });
         }
-        return res.status(200).json({ success: true, message: "¡Bienvenido!" });
+        // return res.status(200).json({ success: true, message: "¡Bienvenido!" });
+        if (data.length > 0) {
+            const user = data[0];
+            return res.status(200).json({
+                success: true,
+                message: "¡Bienvenido!",
+                nombreApellido: user.NOMBRE_APELLIDO
+            });
+        } else {
+            return res.status(401).json({ success: false, message: "Credenciales incorrectas" });
+        }
     });
 });
 
