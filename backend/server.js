@@ -21,6 +21,10 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     // credentials: true
 })); // para habilitar CORS y permite que otros origenes consuman el servidor
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store')
+    next()
+});
 
 // conexion a la db
 const db = mysql.createConnection({
@@ -69,7 +73,8 @@ app.post('/login', (req, res) => {
             console.error("Error en la selección: ", err);
             return res.status(500).json({ success: false, error: "Error en el servidor", details: err });
         }
-        // return res.status(200).json({ success: true, message: "¡Bienvenido!" });
+        
+        // Manejo para la autenticación correcta del usuario...
         if (data.length > 0) {
             const user = data[0];
             return res.status(200).json({
