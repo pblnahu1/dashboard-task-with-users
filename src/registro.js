@@ -1,7 +1,4 @@
 
-/**
- * Lado del cliente (Frontend)
-*/
 import userLogged, {saveUserToLS} from "./userLogged.mjs";
 
 // import axios from 'axios';
@@ -30,14 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = document.getElementById("email-register").value;
       const password = document.getElementById("password-register").value;
   
-      // hago una solicitud POST al servidor, con la URL del endpoint del servidor y los datos del usuario que se envían en la solicitud para registrar al usuario
       axios.post('http://localhost:8081/register', { nombreApellido, email, password, mode: 'cors' })
         .then(res => {
           console.log("Respuesta del Servidor: ", res);
           console.log("Datos del Servidor: ", res.data);
 
           if (res.data.success) {
-            // localStorage.setItem('nombreApellido', nombreApellido);
             saveUserToLS(email, nombreApellido);
             console.log("Registro Exitoso: " + res.data.message);
 
@@ -76,12 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
   
       axios.post('http://localhost:8081/login', { email, password, mode: 'cors' })
         .then(res => {
-          // console.log("Respuesta del Servidor: ", res);
-          // console.log("Datos del Servidor: ", res.data);
+          console.log("Respuesta del Servidor: ", res);
+          console.log("Datos del Servidor: ", res.data);
           if (res.data.success) {
             const { nombreApellido } = res.data;
             if (nombreApellido) {
-              // localStorage.setItem('nombreApellido', nombreApellido);
               saveUserToLS(email, nombreApellido);
               console.log("Login Exitoso: " + res.data.message);
             } else {

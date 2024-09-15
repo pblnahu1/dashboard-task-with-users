@@ -1,172 +1,165 @@
-// Acá manejo la lógica con las tareas usando clases y objetos
+export class TaskManager {
+  constructor() {
+    this.tasks = [];
+    this.edicionTaskId = null;
+  }
 
-export class TaskManager { 
-    constructor() {
-        this.tasks = [];
-        this.edicionTaskId = null; // para ver si se está editando
+  calcularPorcentaje() {
+    const totalTasks = this.tasks.length;
+    const tasksCompletadas = this.tasks.filter(task => task.completed).length;
+    const porcentaje = totalTasks === 0 ? 0 : (tasksCompletadas / totalTasks) * 100;
+    return porcentaje.toFixed(2);
+  }
+
+  async addOrUpdateTask(name, color, userId) {
+    if (this.edicionTaskId !== null) {
+      const task = this.tasks.find(task => task.id === this.edicionTaskId);
+      if (task) {
+        task.name = name;
+        task.color = color;
+        task.userId = userId;
+      }
+      this.edicionTaskId = null;
+    } else {
+      const task = {
+        id: this.tasks.length + 1,
+        name,
+        color: color || '#ffffff',
+        completed: false,
+        userId
+      };
+      this.tasks.push(task);
     }
+    await this.saveTasks();
+    this.renderTasks();
+  }
 
-    // funcion para calcular el porcentaje de tareas completadas
-    calcularPorcentaje() {
-        const totalTasks = this.tasks.length;
-        const tasksCompletadas = this.tasks.filter(task => task.completed).length;
-        const porcentaje = totalTasks === 0 ? 0 : (tasksCompletadas / totalTasks) * 100;
-        return porcentaje.toFixed(2);//redondear a 2 decimales
+  toggleTaskCompletion(id) {
+    const task = this.tasks.find(task => task.id === id);
+    if (task) {
+      task.completed = !task.completed;
     }
+  }
 
-    async addOrUpdateTask(name, color, userId) {
-        if (this.edicionTaskId !== null) {
-            const task = this.tasks.find(task => task.id === this.edicionTaskId);
-            if (task) {
-                task.name = name;
-                task.color = color;
-                task.userId = userId;
-            }
-            this.edicionTaskId = null;
+  deleteTask(id) {
+    this.tasks = this.tasks.filter(task => task.id !== id);
+  }
+
+  editTask(id) {
+    const task = this.tasks.find(task => task.id === id);
+    if (task) {
+      document.getElementById('task-name').value = task.name;
+      this.edicionTaskId = id;
+    }
+  }
+
+  renderTasks() {
+    const taskList = document.getElementById("tasks");
+    const contentText = document.getElementById("text_tareas");
+    const pendingTasks = document.getElementById("pending-tasks");
+
+    if (taskList && contentText) {
+      contentText.innerHTML = '';
+      if (this.tasks.length === 0) {
+        contentText.innerHTML = 'No hay tareas. ¡Agregá una con tu color favorito!';
+      } else {
+        contentText.innerHTML = `Completá, Editá y Eliminá tus tareas`;
+        if (pendingTasks) {
+          pendingTasks.textContent = `Tienes ${this.tasks.length} ${this.tasks.length === 1 ? 'tarea' : 'tareas'} ${this.tasks.length === 1 ? 'pendiente' : 'pendientes'}`;
         } else {
-            const task = {
-                id: this.tasks.length + 1,
-                name,
-                color: color || '#ffffff',
-                completed: false,
-                userId
-            };
-            this.tasks.push(task);
+          console.log("El elemento de pendientes de tareas no existe");
         }
-        await this.saveTasks();
+      }
+    } else {
+      if (taskList === null) {
+        console.log("La lista de tareas no existe");
+      }
+
+      if (contentText === null) {
+        console.log("El elemento de texto para las tareas no existe");
+      }
+    }
+
+    taskList.innerHTML = '';
+
+    const porcentajeCompletado = this.calcularPorcentaje();
+    const completadoBar = document.getElementById("completion-porcentage");
+    completadoBar.textContent = `Progreso General: ${porcentajeCompletado}% Completado`;
+
+    const progressBar = document.getElementById("progress-bar");
+    progressBar.style.width = `${porcentajeCompletado}%`;
+
+    const containerMainTask = document.createElement('div');
+    containerMainTask.classList.add("container-main-task");
+    taskList.appendChild(containerMainTask);
+
+    this.tasks.forEach(({ id, name, color, completed }) => {
+      const containerTasksGrid = document.createElement('div');
+      containerTasksGrid.classList.add("task-container-grid");
+      containerMainTask.appendChild(containerTasksGrid);
+
+
+      const containerTasks = document.createElement('div');
+      containerTasks.id = `${id}`;
+      containerTasks.classList.add("task-container");
+      containerTasksGrid.appendChild(containerTasks);
+
+
+      const containerButtons = document.createElement('div');
+      containerButtons.classList.add("container-buttons-task");
+      containerTasksGrid.appendChild(containerButtons);
+
+      const taskItem = document.createElement("li");
+      taskItem.classList.add("task-item-container");
+      taskItem.textContent = name;
+      taskItem.style.backgroundColor = color;
+
+      if (completed) {
+        taskItem.classList.add("completed");
+      }
+
+      const toggleButton = document.createElement('button');
+      toggleButton.textContent = completed ? 'Completado ✅' : 'Completar 🔥';
+      toggleButton.addEventListener('click', () => {
+        this.toggleTaskCompletion(id);
         this.renderTasks();
-    }
+      });
 
-    toggleTaskCompletion(id) {
-        const task = this.tasks.find(task => task.id === id);
-        if (task) {
-            task.completed = !task.completed;
-        }
-    }
+      const editButton = document.createElement('button');
+      editButton.textContent = 'Editar ✏️';
+      editButton.addEventListener('click', () => {
+        this.editTask(id);
+      });
 
-    deleteTask(id) {
-        this.tasks = this.tasks.filter(task => task.id !== id);
-    }
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Borrar ❌';
+      deleteButton.addEventListener("click", () => {
+        this.deleteTask(id);
+        this.renderTasks();
+      });
 
-    editTask(id) {
-        const task = this.tasks.find(task => task.id === id);
-        if (task) {
-            document.getElementById('task-name').value = task.name;
-            this.edicionTaskId = id;
-        }
-    }
+      containerButtons.appendChild(toggleButton);
+      containerButtons.appendChild(editButton);
+      containerButtons.appendChild(deleteButton);
+      containerTasks.appendChild(taskItem);
+    });
+  }
 
-    renderTasks() {
-        const taskList = document.getElementById("tasks");
-        const contentText = document.getElementById("text_tareas");
-        const pendingTasks = document.getElementById("pending-tasks");
-        
-        if (taskList && contentText) { // si taskList y contentText existen
-            contentText.innerHTML = ''; // Limpio contenido de texto
-            if (this.tasks.length === 0) {
-                contentText.innerHTML = 'No hay tareas. ¡Agregá una con tu color favorito!';
-            } else {
-                contentText.innerHTML = `Completá, Editá y Eliminá tus tareas`;
-                if (pendingTasks) { 
-                    pendingTasks.textContent = `Tienes ${this.tasks.length} ${this.tasks.length === 1 ? 'tarea' : 'tareas'} ${this.tasks.length === 1 ? 'pendiente' : 'pendientes'}`;
-                } else {
-                    console.log("El elemento de pendientes de tareas no existe");
-                }
-            }
-        } else {
-            if (taskList === null) {
-                console.log("La lista de tareas no existe");
-            }
+  async saveTasks() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        console.log("Tasks saved!");
+        resolve();
+      }, 500);
+    });
+  }
 
-            if (contentText === null) {
-                console.log("El elemento de texto para las tareas no existe");
-            }
-        }
-
-        taskList.innerHTML = '';
-
-        // mostrar el porcentaje de tareas completadas
-        const porcentajeCompletado = this.calcularPorcentaje();
-        const completadoBar = document.getElementById("completion-porcentage");
-        completadoBar.textContent=`Progreso General: ${porcentajeCompletado}% Completado`;
-
-        // actualizar la barra de progreso
-        const progressBar = document.getElementById("progress-bar");
-        progressBar.style.width = `${porcentajeCompletado}%`;
-
-        const containerMainTask = document.createElement('div');
-        containerMainTask.classList.add("container-main-task");
-        taskList.appendChild(containerMainTask);
-        
-        this.tasks.forEach(({ id, name, color, completed }) => { // Desestructuring
-            const containerTasksGrid = document.createElement('div');
-            containerTasksGrid.classList.add("task-container-grid");
-            containerMainTask.appendChild(containerTasksGrid);
-
-
-            const containerTasks = document.createElement('div');
-            containerTasks.id = `${id}`;
-            containerTasks.classList.add("task-container");
-            containerTasksGrid.appendChild(containerTasks);
-
-
-            const containerButtons = document.createElement('div');
-            containerButtons.classList.add("container-buttons-task");
-            containerTasksGrid.appendChild(containerButtons);
-
-            const taskItem = document.createElement("li");
-            taskItem.classList.add("task-item-container");
-            taskItem.textContent = name;
-            taskItem.style.backgroundColor = color;
-
-            if (completed) {
-                taskItem.classList.add("completed");
-            }
-
-            // boton para marcar como completada
-            const toggleButton = document.createElement('button');
-            toggleButton.textContent = completed ? 'Completado ✅' : 'Completar 🔥';
-            toggleButton.addEventListener('click', () => {
-                this.toggleTaskCompletion(id);
-                this.renderTasks();
-            });
-
-            const editButton = document.createElement('button');
-            editButton.textContent = 'Editar ✏️';
-            editButton.addEventListener('click', () => {
-                this.editTask(id);
-            });
-
-            // Botón para borrar la tarea
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Borrar ❌';
-            deleteButton.addEventListener("click", () => {
-                this.deleteTask(id);
-                this.renderTasks();
-            });
-
-            containerButtons.appendChild(toggleButton);
-            containerButtons.appendChild(editButton);
-            containerButtons.appendChild(deleteButton);
-            containerTasks.appendChild(taskItem);
-        });
-    }
-
-    async saveTasks() {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                console.log("Tasks saved!");
-                resolve();
-            }, 500);
-        });
-    }
-
-    async loadTasks() {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                console.log("Tasks loades!");
-                resolve(this.tasks);
-            }, 500);
-        });
-    }
+  async loadTasks() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        console.log("Tasks loades!");
+        resolve(this.tasks);
+      }, 500);
+    });
+  }
 }
