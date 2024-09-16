@@ -1,7 +1,9 @@
 
-import userLogged, {saveUserToLS} from "./userLogged.mjs";
+import userLogged, {saveUserToLS, userIcon} from "./userLogged.mjs";
 
 // import axios from 'axios';
+
+const API_URL = 'http://localhost:8081';
 
 const fnAddLoader = () => document.getElementById('loader').classList.add('hidden');
 const fnRemoveLoader = () => document.getElementById('loader').classList.remove('hidden');
@@ -26,14 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const nombreApellido = document.getElementById("name-and-lastname-register").value;
       const email = document.getElementById("email-register").value;
       const password = document.getElementById("password-register").value;
+      const imgIconProfile = document.getElementById("icon-profile").value;
   
-      axios.post('http://localhost:8081/register', { nombreApellido, email, password, mode: 'cors' })
+      axios.post(`${API_URL}/register`, { nombreApellido, email, password, imgIconProfile, mode: 'cors' })
         .then(res => {
           console.log("Respuesta del Servidor: ", res);
           console.log("Datos del Servidor: ", res.data);
 
           if (res.data.success) {
-            saveUserToLS(email, nombreApellido);
+            saveUserToLS(email, nombreApellido, imgIconProfile);
             console.log("Registro Exitoso: " + res.data.message);
 
             if (infoConnection) {
@@ -69,14 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = document.getElementById("email-login").value;
       const password = document.getElementById("password-login").value;
   
-      axios.post('http://localhost:8081/login', { email, password, mode: 'cors' })
+      axios.post(`${API_URL}/login`, { email, password, mode: 'cors' })
         .then(res => {
           console.log("Respuesta del Servidor: ", res);
           console.log("Datos del Servidor: ", res.data);
           if (res.data.success) {
-            const { nombreApellido } = res.data;
+            const { nombreApellido, imgIconProfile } = res.data;
             if (nombreApellido) {
-              saveUserToLS(email, nombreApellido);
+              saveUserToLS(email, nombreApellido, imgIconProfile);
               console.log("Login Exitoso: " + res.data.message);
             } else {
               console.error("Error al iniciar sesión: ", res.data.message);
@@ -107,4 +110,5 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   userLogged("name-user-logged");
+  userIcon("img-user-logged");
 });

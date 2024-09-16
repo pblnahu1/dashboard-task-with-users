@@ -11,3 +11,12 @@ CREATE TABLE IF NOT EXISTS USUARIOS(
 );
 
 INSERT INTO USUARIOS (NOMBRE_APELLIDO, EMAIL, PASSWORD) VALUES ('Javier', 'pXQp3@example.com', '123456');
+
+
+
+ALTER TABLE usuarios ADD COLUMN icon_profile VARCHAR(255);
+
+UPDATE usuarios SET icon_profile = 'https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQI7iw6Bg9aNVGQJVzBfX4b3IA3zo5cyzqf0bnz2zEA7y-Sw9lF7na5iij6bIv-g48o8dtmPI_b6FlPHFs' WHERE ID_USUARIO = 1 AND NOMBRE_APELLIDO = 'Javier';
+
+
+SELECT * FROM USUARIOS

@@ -29,7 +29,7 @@ const db = mysql.createConnection({
 })
 
 app.post('/register', (req, res) => {
-    const { nombreApellido, email, password } = req.body;
+    const { nombreApellido, email, password, iconProfile } = req.body;
 
     if (!nombreApellido || !email || !password) {
         if (!nombreApellido) return res.status(400).json({success: false, error: "El nombre es obligatorio" });
@@ -41,9 +41,9 @@ app.post('/register', (req, res) => {
         if (password.length < 6) return res.status(400).json({success: false, error: "La contraseña debe tener al menos 6 caracteres" });
     }
 
-    const sql = "INSERT INTO USUARIOS (NOMBRE_APELLIDO, EMAIL, PASSWORD) VALUES (?, ?, ?)";
+    const sql = "INSERT INTO USUARIOS (NOMBRE_APELLIDO, EMAIL, PASSWORD, icon_profile) VALUES (?, ?, ?, ?)";
     
-    db.query(sql, [nombreApellido, email, password], (err, data) => {
+    db.query(sql, [nombreApellido, email, password, iconProfile], (err, data) => {
         if (err) {
             console.error("Error en la inserción: ", err);
             return res.status(500).json({ success: false, error: "Error en el servidor", details: err });
@@ -71,7 +71,8 @@ app.post('/login', (req, res) => {
             return res.status(200).json({
                 success: true,
                 message: "¡Bienvenido!",
-                nombreApellido: user.NOMBRE_APELLIDO
+                nombreApellido: user.NOMBRE_APELLIDO,
+                imgIconProfile: user.icon_profile
             });
         } else {
             return res.status(401).json({ success: false, message: "Credenciales incorrectas" });
