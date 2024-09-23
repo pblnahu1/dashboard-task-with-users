@@ -26,17 +26,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       fnRemoveLoader();
       
-      const formData = new FormData(event.target); // capturo todo del form
+      const formData = new FormData(this); // capturo todo del form
 
-      // const nombreApellido = document.getElementById("name-and-lastname-register").value;
-      // const email = document.getElementById("email-register").value;
-      // const password = document.getElementById("password-register").value;
-      // const iconProfile = document.getElementById("icon-profile").files[0];
+      const nombreApellido = document.getElementById("name-and-lastname-register").value;
+      const email = document.getElementById("email-register").value;
+      const password = document.getElementById("password-register").value;
+      const iconProfile = document.getElementById("icon-profile").files[0];
       
-      // formData.append('nombreApellido', nombreApellido)
-      // formData.append('email', email)
-      // formData.append('password', password)
-      // formData.append('iconProfile', iconProfile)
+      formData.append('nombreApellido', nombreApellido)
+      formData.append('email', email)
+      formData.append('password', password)
+      formData.append('iconProfile', iconProfile)
   
       axios.post(`${API_URL}/register`, formData, {
         mode: 'cors',
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log("Respuesta del Servidor: ", res);
 
           if (res.data.success) {
-            saveUserToLS(res.data.email, res.data.nombreApellido, res.data.iconProfile);
+            saveUserToLS(email, nombreApellido, iconProfile);
             console.log("Registro Exitoso: " + res.data.message);
 
             if (infoConnection) {
@@ -84,7 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const email = document.getElementById("email-login").value;
       const password = document.getElementById("password-login").value;
   
-      axios.post(`${API_URL}/login`, { email, password, mode: 'cors' })
+      axios.post(`${API_URL}/login`, {
+        mode: 'cors',
+        email,
+        password
+      })
         .then(res => {
           console.log("Respuesta del Servidor: ", res);
           if (res.data.success) {
