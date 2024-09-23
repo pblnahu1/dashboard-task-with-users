@@ -156,6 +156,14 @@ Funciones auxiliares para operaciones comunes. (opcional)
 
 ---
 
+## Instalaciones / Dependencias
+* CORS: `npm install cors`
+* EXPRESS: `npm install express`
+* AXIOS: `npm install axios`
+* MYSQL: `npm install mysql`
+* MULTER: `npm install multer`
+
+
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT.

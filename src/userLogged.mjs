@@ -1,4 +1,4 @@
-export function saveUserToLS(email, nombreApellido, imgIconProfile) {
+export function saveUserToLS(email, nombreApellido, iconProfile) {
 
     ///////////////////////////////////////////////////////////
 
@@ -15,7 +15,7 @@ export function saveUserToLS(email, nombreApellido, imgIconProfile) {
 
     ///////////////////////////////////////////////////////////
 
-    const user = { nombreApellido, imgIconProfile };
+    const user = { nombreApellido, iconProfile };
     if (user) {
         localStorage.setItem('loggedUser', JSON.stringify(user));
         console.log("Usuario logueado:", JSON.stringify(user));
@@ -66,15 +66,15 @@ export function userIcon(selector) {
         return;
     }
     const loggedInUser = getLoggedInUser();
-    if (!loggedInUser || !loggedInUser.imgIconProfile) { 
+    if (!loggedInUser || !loggedInUser.iconProfile) { 
         console.log("No hay usuario logueado o no se pudo recuperar de localStorage");
         return;
     }
 
     const img = new Image();
-    img.onload = () => userIcon.src = loggedInUser.imgIconProfile;
+    img.onload = () => userIcon.src = loggedInUser.iconProfile;
     img.onerror = () => console.error("URL de imágen no válida");
-    img.src = loggedInUser.imgIconProfile;
+    img.src = loggedInUser.iconProfile;
 }
 
 export default function userLogged(selector) {

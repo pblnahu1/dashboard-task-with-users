@@ -19,4 +19,6 @@ ALTER TABLE usuarios ADD COLUMN icon_profile VARCHAR(255);
 UPDATE usuarios SET icon_profile = 'https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQI7iw6Bg9aNVGQJVzBfX4b3IA3zo5cyzqf0bnz2zEA7y-Sw9lF7na5iij6bIv-g48o8dtmPI_b6FlPHFs' WHERE ID_USUARIO = 1 AND NOMBRE_APELLIDO = 'Javier';
 
 
-SELECT * FROM USUARIOS
+SELECT * FROM usuarios
+
+ALTER TABLE usuarios MODIFY COLUMN icon_profile TEXT NOT NULL;

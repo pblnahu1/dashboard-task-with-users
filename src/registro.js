@@ -23,20 +23,33 @@ document.addEventListener('DOMContentLoaded', () => {
   if (formRegister) {
     formRegister.addEventListener("submit", (event) => {
       event.preventDefault();
+
       fnRemoveLoader();
-  
+      
+      const formData = new FormData(event.target); // capturo todo del form
+
       const nombreApellido = document.getElementById("name-and-lastname-register").value;
       const email = document.getElementById("email-register").value;
       const password = document.getElementById("password-register").value;
-      const imgIconProfile = document.getElementById("icon-profile").value;
+      const iconProfile = document.getElementById("icon-profile").files[0];
+      
+      formData.append('nombreApellido', nombreApellido)
+      formData.append('email', email)
+      formData.append('password', password)
+      formData.append('iconProfile', iconProfile)
   
-      axios.post(`${API_URL}/register`, { nombreApellido, email, password, imgIconProfile, mode: 'cors' })
+      axios.post(`${API_URL}/register`, formData, {
+        mode: 'cors',
+        headers: {
+          'Content-Type':'multipart/form-data'
+        }
+      })
         .then(res => {
           console.log("Respuesta del Servidor: ", res);
           console.log("Datos del Servidor: ", res.data);
 
           if (res.data.success) {
-            saveUserToLS(email, nombreApellido, imgIconProfile);
+            saveUserToLS(email, nombreApellido, res.data.iconProfile);
             console.log("Registro Exitoso: " + res.data.message);
 
             if (infoConnection) {
@@ -77,9 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log("Respuesta del Servidor: ", res);
           console.log("Datos del Servidor: ", res.data);
           if (res.data.success) {
-            const { nombreApellido, imgIconProfile } = res.data;
+            const { nombreApellido, iconProfile } = res.data;
             if (nombreApellido) {
-              saveUserToLS(email, nombreApellido, imgIconProfile);
+              saveUserToLS(email, nombreApellido, iconProfile);
               console.log("Login Exitoso: " + res.data.message);
             } else {
               console.error("Error al iniciar sesión: ", res.data.message);

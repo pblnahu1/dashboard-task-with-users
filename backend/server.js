@@ -5,6 +5,12 @@ const mysql = require('mysql')
 
 const cors = require('cors')
 
+const multer = require('multer')
+
+const fs = require('fs')
+
+const path = require('path')
+
 const app = express()
 
 const PORT = 8081;
@@ -21,6 +27,36 @@ app.use((request, response, next) => {
   next();
 });
 
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './uploads')
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 159)
+        cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname))
+    }
+})
+
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        const filetypes = /jpeg|jpg|png/;
+        const mimetype = filetypes.test(file.mimetype);
+        const extname = filetypes.text(path.extname(file.originalname).toLowerCase());
+
+        if (mimetype && extname) {
+            return cb(null, true)
+
+        } else {
+            cb(new Error('Solo se permiten imágenes'))
+        }
+    }
+})
+
+if (!fs.existsSync('./uploads')) {
+    fs.mkdirSync('./uploads')
+}
+
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -28,8 +64,11 @@ const db = mysql.createConnection({
     database: 'db_gestion_de_tareas'
 })
 
-app.post('/register', (req, res) => {
-    const { nombreApellido, email, password, iconProfile } = req.body;
+app.use('/uploads', express.static('uploads'))
+
+app.post('/register', upload.single('iconProfile'), (req, res) => {
+    const { nombreApellido, email, password } = req.body;
+    const iconProfile = req.file ? req.file.filename : null;
 
     if (!nombreApellido || !email || !password) {
         if (!nombreApellido) return res.status(400).json({success: false, error: "El nombre es obligatorio" });
