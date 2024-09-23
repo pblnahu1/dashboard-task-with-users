@@ -28,15 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const formData = new FormData(event.target); // capturo todo del form
 
-      const nombreApellido = document.getElementById("name-and-lastname-register").value;
-      const email = document.getElementById("email-register").value;
-      const password = document.getElementById("password-register").value;
-      const iconProfile = document.getElementById("icon-profile").files[0];
+      // const nombreApellido = document.getElementById("name-and-lastname-register").value;
+      // const email = document.getElementById("email-register").value;
+      // const password = document.getElementById("password-register").value;
+      // const iconProfile = document.getElementById("icon-profile").files[0];
       
-      formData.append('nombreApellido', nombreApellido)
-      formData.append('email', email)
-      formData.append('password', password)
-      formData.append('iconProfile', iconProfile)
+      // formData.append('nombreApellido', nombreApellido)
+      // formData.append('email', email)
+      // formData.append('password', password)
+      // formData.append('iconProfile', iconProfile)
   
       axios.post(`${API_URL}/register`, formData, {
         mode: 'cors',
@@ -46,10 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
       })
         .then(res => {
           console.log("Respuesta del Servidor: ", res);
-          console.log("Datos del Servidor: ", res.data);
 
           if (res.data.success) {
-            saveUserToLS(email, nombreApellido, res.data.iconProfile);
+            saveUserToLS(res.data.email, res.data.nombreApellido, res.data.iconProfile);
             console.log("Registro Exitoso: " + res.data.message);
 
             if (infoConnection) {
@@ -60,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => {
               window.location.replace('./dashboard-tasks.html');
-            }, 2000)
+            }, 2000);
           } else {
             if (infoConnection) {
               infoConnection.innerText = res.data.message || "Error al registrar el usuario";
@@ -88,15 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
       axios.post(`${API_URL}/login`, { email, password, mode: 'cors' })
         .then(res => {
           console.log("Respuesta del Servidor: ", res);
-          console.log("Datos del Servidor: ", res.data);
           if (res.data.success) {
             const { nombreApellido, iconProfile } = res.data;
-            if (nombreApellido) {
-              saveUserToLS(email, nombreApellido, iconProfile);
-              console.log("Login Exitoso: " + res.data.message);
-            } else {
-              console.error("Error al iniciar sesión: ", res.data.message);
-            }
+            saveUserToLS(email, nombreApellido, iconProfile);
+            console.log("Login Exitoso: " + res.data.message);
 
             if (infoConnection2) {
               infoConnection2.innerText = res.data.message;
