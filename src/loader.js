@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
             fnRemoveLoader();
             setTimeout(() => {
                 window.location.href = event.target.href;
-            }, 500);
+            }, 1000);
 
             event.preventDefault();
         });

@@ -27,9 +27,10 @@ app.use((request, response, next) => {
   next();
 });
 
+// Configuración de Multer para subir archivos
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, './uploads')
+        cb(null, './uploads') // acá se guardarán
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 159)
@@ -42,7 +43,7 @@ const upload = multer({
     fileFilter: (req, file, cb) => {
         const filetypes = /jpeg|jpg|png/;
         const mimetype = filetypes.test(file.mimetype);
-        const extname = filetypes.text(path.extname(file.originalname).toLowerCase());
+        const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 
         if (mimetype && extname) {
             return cb(null, true)
@@ -53,6 +54,7 @@ const upload = multer({
     }
 })
 
+// crear directorio si no existe
 if (!fs.existsSync('./uploads')) {
     fs.mkdirSync('./uploads')
 }
@@ -64,19 +66,21 @@ const db = mysql.createConnection({
     database: 'db_gestion_de_tareas'
 })
 
+// ruta estática
 app.use('/uploads', express.static('uploads'))
 
 app.post('/register', upload.single('iconProfile'), (req, res) => {
+
+    console.log("Body:", req.body)
+    console.log("File:", req.file)
+
     const { nombreApellido, email, password } = req.body;
     const iconProfile = req.file ? req.file.filename : null;
 
     if (!nombreApellido || !email || !password) {
-        if (!nombreApellido) return res.status(400).json({success: false, error: "El nombre es obligatorio" });
-
+        if (!nombreApellido) return res.status(400).json({ success: false, error: "El nombre es obligatorio" });
         if (!email) return res.status(400).json({success: false, error: "El Email es obligatorio" });
-
         if (!password) return res.status(400).json({success: false, error: "La contraseña es obligatoria" });
-
         if (password.length < 6) return res.status(400).json({success: false, error: "La contraseña debe tener al menos 6 caracteres" });
     }
 
@@ -107,11 +111,12 @@ app.post('/login', (req, res) => {
         
         if (data.length > 0) {
             const user = data[0];
+            const iconUrl = user.icon_profile ? `http://localhost:8081/uploads/${user.icon_profile}` : null;
             return res.status(200).json({
                 success: true,
                 message: "¡Bienvenido!",
                 nombreApellido: user.NOMBRE_APELLIDO,
-                imgIconProfile: user.icon_profile
+                iconProfile: iconUrl,
             });
         } else {
             return res.status(401).json({ success: false, message: "Credenciales incorrectas" });

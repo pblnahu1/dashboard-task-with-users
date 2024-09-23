@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resetForm('register-form');
 
             setTimeout(() => {
-              window.location.href = './dashboard-tasks.html';
+              window.location.replace('./dashboard-tasks.html');
             }, 2000)
           } else {
             if (infoConnection) {
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resetForm('login-form');
 
             setTimeout(() => {
-              window.location.href = './dashboard-tasks.html';
+              window.location.replace('./dashboard-tasks.html');
             }, 2000);
           } else {
             if (infoConnection2) {

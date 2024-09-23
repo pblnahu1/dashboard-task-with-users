@@ -67,13 +67,16 @@ export function userIcon(selector) {
     }
     const loggedInUser = getLoggedInUser();
     if (!loggedInUser || !loggedInUser.iconProfile) { 
-        console.log("No hay usuario logueado o no se pudo recuperar de localStorage");
+        console.log("No hay usuario logueado o no se pudo recuperar la imágen de perfil de localStorage");
+        userIcon.src=`http://localhost:8081/uploads/icon-default.png`
         return;
     }
 
     const img = new Image();
     img.onload = () => userIcon.src = loggedInUser.iconProfile;
-    img.onerror = () => console.error("URL de imágen no válida");
+    img.onerror = () => {
+        console.error("URL de imágen no válida");
+    }
     img.src = loggedInUser.iconProfile;
 }
 
