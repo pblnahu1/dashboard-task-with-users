@@ -40,6 +40,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
+    limits: {fileSize: 1*1024*1024}, // limite de 1mb
     fileFilter: (req, file, cb) => {
         const filetypes = /jpeg|jpg|png/;
         const mimetype = filetypes.test(file.mimetype);
@@ -70,6 +71,10 @@ const db = mysql.createConnection({
 app.use('/uploads', express.static('uploads'))
 
 app.post('/register', upload.single('iconProfile'), (req, res) => {
+
+    if (req.fileValidationError) {
+        return res.status(400).json({ success: false, error: req.fileValidationError })
+    }
 
     console.log("Body:", req.body)
     console.log("File:", req.file)
