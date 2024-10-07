@@ -36,13 +36,37 @@ document.getElementById("task-name").addEventListener("keydown", (e) => {
 ///////////////////////////////////////////////////////
 
 async function handleTask() {
-  const nombreTarea = document.getElementById("task-name").value;
-  if (nombreTarea) {
-    await taskManager.addOrUpdateTask(nombreTarea, selectedColor || "#ffffff");
+  const nombreTarea = document.getElementById("task-name").value.trim();
+  const taskNameInput = document.getElementById("task-name");
+  let userId = '';
+  const loggedUser = localStorage.getItem('loggedUser');
+  if (loggedUser) {
+    // parseo
+    const user = JSON.parse(loggedUser);
+    // accedo a id del user
+    userId = user.userId;
+  }
+  if (!nombreTarea || !userId) {
+    // await taskManager.addOrUpdateTask(nombreTarea, selectedColor || "#ffffff");
+    // taskManager.renderTasks();
+    // document.getElementById("task-name").value = ''; // limpio el input
+    // selectedColor = null; // reinicio el color
+    // document.querySelectorAll('.color-option').forEach(option => option.classList.remove('selected'));
+
+    console.error("El nombre de la tarea o el userId son inválidos");
+    taskNameInput.classList.add("input-error");
+    return;
+  }
+
+  try {
+    await taskManager.addOrUpdateTask(nombreTarea, selectedColor || "#ffffff", userId);
     taskManager.renderTasks();
-    document.getElementById("task-name").value = ''; // limpio el input
+    taskNameInput.value = ''; // limpio el input
+    taskNameInput.classList.remove("input-error");
     selectedColor = null; // reinicio el color
     document.querySelectorAll('.color-option').forEach(option => option.classList.remove('selected'));
+  } catch (error) {
+    console.error("Error al agregar o actualizar la tarea: ", error);
   }
 }
 
@@ -64,9 +88,11 @@ async function handleTask() {
 ///////////////////////////////////////////////////////
 
 // cargo tareas cuando la página se carga 
-window.addEventListener('DOMContentLoaded', async () => {
-  await taskManager.loadTasks();
-  taskManager.renderTasks();
-  // await userManager.loadUsers();
-  // userManager.renderUsuarios();
-});
+window.onload = async () => {
+  const userId = localStorage.getItem('userId');
+  if (userId) {
+    await taskManager.loadTasks(userId);
+  }
+};
+
+

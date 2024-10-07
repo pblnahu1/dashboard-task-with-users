@@ -1,4 +1,4 @@
-export function saveUserToLS(email, nombreApellido, iconProfile) {
+export function saveUserToLS(email, nombreApellido, iconProfile, userId) {
 
     ///////////////////////////////////////////////////////////
 
@@ -15,7 +15,7 @@ export function saveUserToLS(email, nombreApellido, iconProfile) {
 
     ///////////////////////////////////////////////////////////
 
-    const user = { nombreApellido, iconProfile };
+    const user = { nombreApellido, iconProfile, userId };
     if (user) {
         localStorage.setItem('loggedUser', JSON.stringify(user));
         console.log("Usuario logueado:", JSON.stringify(user));
@@ -51,7 +51,7 @@ function getLoggedInUser() {
     try {
         const parsedUser = JSON.parse(user);
         console.log("Datos del Usuario logueado:", parsedUser);
-        return parsedUser || null;
+        return parsedUser;
     } catch (error) {
         console.error("Error al parsear los datos desde localStorage:", error);
         return null;

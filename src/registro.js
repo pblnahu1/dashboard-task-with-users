@@ -1,9 +1,6 @@
 
-import userLogged, {saveUserToLS, userIcon} from "./userLogged.mjs";
-
-// import axios from 'axios';
-
-const API_URL = 'http://localhost:8081';
+import { API_URL } from "../api/rutas.js";
+import userLogged, { saveUserToLS, userIcon } from "./userLogged.mjs";
 
 const fnAddLoader = () => document.getElementById('loader').classList.add('hidden');
 const fnRemoveLoader = () => document.getElementById('loader').classList.remove('hidden');
@@ -92,8 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(res => {
           console.log("Respuesta del Servidor: ", res);
           if (res.data.success) {
-            const { nombreApellido, iconProfile } = res.data;
-            saveUserToLS(email, nombreApellido, iconProfile);
+            const { nombreApellido, iconProfile, userId } = res.data;
+            saveUserToLS(email, nombreApellido, iconProfile, userId);
             console.log("Login Exitoso: " + res.data.message);
 
             if (infoConnection2) {

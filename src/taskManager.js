@@ -30,7 +30,7 @@ export class TaskManager {
       };
       this.tasks.push(task);
     }
-    await this.saveTasks();
+    await this.saveTasks(name,color,userId);
     this.renderTasks();
   }
 
@@ -145,16 +145,47 @@ export class TaskManager {
     });
   }
 
-  async saveTasks() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        console.log("Tasks saved!");
-        resolve();
-      }, 500);
-    });
+  async saveTasks(name, color, userId) {
+
+    const taskData = { name, color, userId };
+    if (this.edicionTaskId !== null) {
+      // actualizo tarea existente
+      await axios.put(`http://localhost:8081/tasks/${this.edicionTaskId}`, taskData)
+        .then(res => console.log(res.data.message))
+        .catch(err => console.error(err));
+      
+      this.edicionTaskId = null;
+    } else {
+      await axios.post(`http://localhost:8081/tasks`, taskData)
+        .then(res => console.log(res.data.message))
+        .catch(err => console.error(err));
+    }
+
+    this.renderTasks();
+
+    // return new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     console.log("Tasks saved!");
+    //     resolve();
+    //   }, 500);
+    // });
   }
 
-  async loadTasks() {
+
+  async loadTasks(userId) {
+
+    try {
+      const response = await axios.get(`http://localhost:8081/tasks/${userId}`);
+      if (response.data.success) { 
+        this.tasks = response.data.tasks;
+        this.renderTasks();
+      } else {
+        console.error("Error al cargar tareas: ", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de tareas: ", error);
+    }
+
     return new Promise((resolve) => {
       setTimeout(() => {
         console.log("Tasks loades!");
