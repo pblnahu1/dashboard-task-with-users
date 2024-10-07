@@ -4,13 +4,15 @@
 // inserta una tarea desde la api para probar.. ejecutarlo cuando no funcione la solicitud cliente-servidor
 ////////////////////////////////////////
 
+import { API_URL } from "../../api/rutas.js";
+
 const taskData = {
   name: 'Nueva Tarea',
   color: '#ff0000', // Rojo como ejemplo
   userId: 1 // ID de usuario, este debe existir en la base de datos
 };
 
-fetch('http://localhost:8081/tasks', {
+fetch(`${API_URL}/tasks`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',

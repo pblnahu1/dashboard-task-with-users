@@ -1,11 +1,13 @@
-import { PORT } from '../api/rutas.js'
 
-const express = require('express')
-const mysql = require('mysql')
-const cors = require('cors')
-const multer = require('multer')
-const fs = require('fs')
-const path = require('path')
+import { PORT, API_URL } from '../api/rutas.js'
+
+import express from 'express'
+import mysql from 'mysql'
+import cors from 'cors'
+import multer from 'multer'
+import fs from 'fs'
+import path from 'path'
+
 const app = express()
 
 app.use(express.json())
@@ -109,7 +111,7 @@ app.post('/login', (req, res) => {
 
     if (data.length > 0) {
       const user = data[0];
-      const iconUrl = user.icon_profile ? `http://localhost:8081/uploads/${user.icon_profile}` : null;
+      const iconUrl = user.icon_profile ? `${API_URL}/uploads/${user.icon_profile}` : null;
       return res.status(200).json({
         success: true,
         message: "¡Bienvenido!",

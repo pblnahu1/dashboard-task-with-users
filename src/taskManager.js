@@ -1,3 +1,6 @@
+
+import { API_URL } from "../api/rutas.js";
+
 export class TaskManager {
   constructor() {
     this.tasks = [];
@@ -150,13 +153,13 @@ export class TaskManager {
     const taskData = { name, color, userId };
     if (this.edicionTaskId !== null) {
       // actualizo tarea existente
-      await axios.put(`http://localhost:8081/tasks/${this.edicionTaskId}`, taskData)
+      await axios.put(`${API_URL}/tasks/${this.edicionTaskId}`, taskData)
         .then(res => console.log(res.data.message))
         .catch(err => console.error(err));
       
       this.edicionTaskId = null;
     } else {
-      await axios.post(`http://localhost:8081/tasks`, taskData)
+      await axios.post(`${API_URL}/tasks`, taskData)
         .then(res => console.log(res.data.message))
         .catch(err => console.error(err));
     }
@@ -175,7 +178,7 @@ export class TaskManager {
   async loadTasks(userId) {
 
     try {
-      const response = await axios.get(`http://localhost:8081/tasks/${userId}`);
+      const response = await axios.get(`${API_URL}/tasks/${userId}`);
       if (response.data.success) { 
         this.tasks = response.data.tasks;
         this.renderTasks();
