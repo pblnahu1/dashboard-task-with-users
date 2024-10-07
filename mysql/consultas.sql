@@ -19,6 +19,8 @@ SET icon_profile = 'https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9
 ################ Selects
 SELECT * FROM usuarios
 
+SELECT * FROM TAREAS WHERE ID_USUARIO = 83
+
 
 
 
