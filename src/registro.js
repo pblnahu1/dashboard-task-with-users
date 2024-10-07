@@ -1,6 +1,6 @@
 
 import { API_URL } from "../api/rutas.js";
-import userLogged, { saveUserToLS, userIcon } from "./userLogged.mjs";
+import { saveUserToLS, userIcon, userLogged } from "./userLogged.js";
 
 const fnAddLoader = () => document.getElementById('loader').classList.add('hidden');
 const fnRemoveLoader = () => document.getElementById('loader').classList.remove('hidden');
