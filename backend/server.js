@@ -154,13 +154,13 @@ app.post(paths.pTasksPost, (req, res) => {
 });
 
 app.get(paths.pTasksGet, (req, res) => {
-  const { id } = req.params;
-  if (!id) {
+  const { userId } = req.params;
+  if (!userId) {
     return res.status(400).json({ success: false, message: "No se proporcionó un ID de usuario" });
   }
 
   const sql = `SELECT ID_TAREA as id, NOMBRE as name, COLOR as color, COMPLETADO as completed FROM TAREAS WHERE ID_USUARIO = ?`;
-  db.query(sql, [id], (err, tasks) => {
+  db.query(sql, [userId], (err, tasks) => {
     if (err) {
       console.error('Error al obtener tareas: ', err);
       res.status(500).json({ success: false, message: 'Error al obtener los datos del servidor. (GET)' });

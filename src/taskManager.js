@@ -208,5 +208,13 @@ export class TaskManager {
     } catch (error) {
       console.error("Error en la solicitud de tareas: ", error);
     }
+
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        console.log('tasks loades!')
+        resolve(this.tasks)
+      }, 500)
+    })
   }
+
 }
