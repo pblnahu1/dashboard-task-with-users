@@ -18,7 +18,7 @@ export class TaskManager {
     if (this.edicionTaskId !== null) {
       const task = this.tasks.find(task => task.id === this.edicionTaskId);
       if (task) {
-        task.name = name;
+        task.name = name; 
         task.color = color;
         task.userId = userId;
       }
@@ -96,7 +96,21 @@ export class TaskManager {
     containerMainTask.classList.add("container-main-task");
     taskList.appendChild(containerMainTask);
 
-    this.tasks.forEach(({ id, name, color, completed }) => {
+    this.tasks.forEach(task => {
+
+      // console.log("Datos de la tarea: ", task);
+      if (!task.id || !task.name || !task.color) {
+        console.error("Datos inválidos en la tarea:", task);
+        return;
+      }
+      
+      const { id, name, color, completed } = task;
+
+      if (!id || !name || !color) {
+        console.error(`La tarea con ID ${id} tiene datos indefinidos.`);
+        return;
+      }
+
       const containerTasksGrid = document.createElement('div');
       containerTasksGrid.classList.add("task-container-grid");
       containerMainTask.appendChild(containerTasksGrid);
@@ -176,11 +190,17 @@ export class TaskManager {
 
 
   async loadTasks(userId) {
+    if (!userId) {
+      console.error("El userId no es válido: ", userId);
+      return;
+    }
 
     try {
       const response = await axios.get(`${API_URL}/tasks/${userId}`);
+      console.log("Datos recibidos del servidor: ", response.data); 
       if (response.data.success) { 
         this.tasks = response.data.tasks;
+        console.log("Tareas a renderizar: ",this.tasks)
         this.renderTasks();
       } else {
         console.error("Error al cargar tareas: ", response.data.message);
@@ -188,12 +208,5 @@ export class TaskManager {
     } catch (error) {
       console.error("Error en la solicitud de tareas: ", error);
     }
-
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        console.log("Tasks loades!");
-        resolve(this.tasks);
-      }, 500);
-    });
   }
 }

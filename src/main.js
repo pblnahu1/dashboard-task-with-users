@@ -38,21 +38,10 @@ document.getElementById("task-name").addEventListener("keydown", (e) => {
 async function handleTask() {
   const nombreTarea = document.getElementById("task-name").value.trim();
   const taskNameInput = document.getElementById("task-name");
-  let userId = '';
   const loggedUser = localStorage.getItem('loggedUser');
-  if (loggedUser) {
-    // parseo
-    const user = JSON.parse(loggedUser);
-    // accedo a id del user
-    userId = user.userId;
-  }
-  if (!nombreTarea || !userId) {
-    // await taskManager.addOrUpdateTask(nombreTarea, selectedColor || "#ffffff");
-    // taskManager.renderTasks();
-    // document.getElementById("task-name").value = ''; // limpio el input
-    // selectedColor = null; // reinicio el color
-    // document.querySelectorAll('.color-option').forEach(option => option.classList.remove('selected'));
+  const userId = loggedUser ? JSON.parse(loggedUser).userId : null;
 
+  if (!nombreTarea || !userId) {
     console.error("El nombre de la tarea o el userId son inválidos");
     taskNameInput.classList.add("input-error");
     return;
@@ -89,9 +78,22 @@ async function handleTask() {
 
 // cargo tareas cuando la página se carga 
 window.onload = async () => {
-  const userId = localStorage.getItem('userId');
-  if (userId) {
-    await taskManager.loadTasks(userId);
+  const loggedUser = localStorage.getItem('loggedUser');
+  if (loggedUser) {
+    try {
+      const user = JSON.parse(loggedUser);
+      const userId = user.userId;
+      if (!userId) {
+        console.error("el userId no es valido")
+        return
+      }
+
+      await taskManager.loadTasks(userId);
+    } catch (error) {
+      console.error("error al cargar las tareas o procesar el usuario logueado: ", error)
+    }
+  } else {
+    console.error("No se encontró el usuario logueado.");
   }
 };
 
