@@ -22,10 +22,21 @@ app.use((request, response, next) => {
   next();
 });
 
+const paths = {
+  pUploadsConfigMulter: './uploads',
+  pUploads: '/uploads',
+  pRegister: '/register',
+  pLogin: '/login',
+  pTasksPost: '/tasks',
+  pTasksGet: '/tasks/:userId',
+  pTasksPut: '/tasks/:id',
+  pTasksDelete: '/tasks/:id'
+}
+
 // Configuración de Multer para subir archivos
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './uploads') // acá se guardarán
+    cb(null, paths.pUploadsConfigMulter) // acá se guardarán
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 159)
@@ -51,8 +62,8 @@ const upload = multer({
 })
 
 // crear directorio si no existe
-if (!fs.existsSync('./uploads')) {
-  fs.mkdirSync('./uploads')
+if (!fs.existsSync(paths.pUploadsConfigMulter)) {
+  fs.mkdirSync(paths.pUploadsConfigMulter)
 }
 
 const db = mysql.createConnection({
@@ -63,9 +74,9 @@ const db = mysql.createConnection({
 })
 
 // ruta estática
-app.use('/uploads', express.static('uploads'))
+app.use(paths.pUploads, express.static('uploads'))
 
-app.post('/register', upload.single('iconProfile'), (req, res) => {
+app.post(paths.pRegister, upload.single('iconProfile'), (req, res) => {
 
   if (req.fileValidationError) {
     return res.status(400).json({ success: false, error: req.fileValidationError })
@@ -95,7 +106,7 @@ app.post('/register', upload.single('iconProfile'), (req, res) => {
   });
 });
 
-app.post('/login', (req, res) => {
+app.post(paths.pLogin, (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     if (!email) return res.status(400).json({ success: false, error: "El Email es obligatorio" });
@@ -125,7 +136,7 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.post('/tasks', (req, res) => {
+app.post(paths.pTasksPost, (req, res) => {
   const { name, color, userId } = req.body;
   if (!name || !userId) {
     return res.status(400).json({ success: false, message: "Hubo un error con enviar las tareas. Faltan datos." })
@@ -142,11 +153,14 @@ app.post('/tasks', (req, res) => {
   });
 });
 
-app.get('/tasks/:userId', (req, res) => {
-  const { userId } = req.params;
+app.get(paths.pTasksGet, (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ success: false, message: "No se proporcionó un ID de usuario" });
+  }
 
-  const sql = `SELECT * FROM TAREAS WHERE ID_USUARIO = ?`;
-  db.query(sql, [userId], (err, tasks) => {
+  const sql = `SELECT ID_TAREA as id, NOMBRE as name, COLOR as color, COMPLETADO as completed FROM TAREAS WHERE ID_USUARIO = ?`;
+  db.query(sql, [id], (err, tasks) => {
     if (err) {
       console.error('Error al obtener tareas: ', err);
       res.status(500).json({ success: false, message: 'Error al obtener los datos del servidor. (GET)' });
@@ -156,7 +170,7 @@ app.get('/tasks/:userId', (req, res) => {
   });
 });
 
-app.put('/tasks/:id', (req, res) => {
+app.put(paths.pTasksPut, (req, res) => {
   const { id } = req.params;
   const { name, color, completed } = req.body;
   const sql = `UPDATE TAREAS SET NOMBRE = ?, COLOR = ?, COMPLETADO = ? WHERE ID_TAREA = ?`;
@@ -170,7 +184,7 @@ app.put('/tasks/:id', (req, res) => {
   });
 });
 
-app.delete('/tasks/:id', (req, res) => {
+app.delete(paths.pTasksDelete, (req, res) => {
   const { id } = req.params;
   const sql = `DELETE FROM TAREAS WHERE ID_TAREA = ?`;
 
