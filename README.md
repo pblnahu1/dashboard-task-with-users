@@ -1,6 +1,6 @@
 # 🚀 Proyecto: Sistema de Gestión de Tareas con Autenticación de Usuarios
 
-Este sistema es una aplicación Full Stack que permite la gestión de tareas y usuarios mediante autenticación. Se utiliza **Node.js**, **Express**, **MySQL**, **Axios**, **CORS** y **localStorage** para el manejo de la base de datos, autenticación y almacenamiento en el lado del cliente.
+Este sistema es una aplicación MERN Stack que permite la gestión de tareas y usuarios mediante autenticación. Se utiliza **Node.js**, **Express**, **MySQL**, **Axios**, **CORS** y **localStorage** para el manejo de la base de datos, autenticación y almacenamiento en el lado del cliente.
 
 ## Imágen del Proyecto
 ![alt text](src/img/screen.png "Muestra Panel")
