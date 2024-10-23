@@ -3,7 +3,9 @@
 Este sistema es una aplicación MERN Stack que permite la gestión de tareas y usuarios mediante autenticación. Se utiliza **Node.js**, **Express**, **MySQL**, **Axios**, **CORS** y **localStorage** para el manejo de la base de datos, autenticación y almacenamiento en el lado del cliente.
 
 ## Imágen del Proyecto
-![alt text](src/img/screen.png "Muestra Panel")
+![alt text](src/img/main.png "Principal")
+![alt text](src/img/auth.png "Login")
+![alt text](src/img/dashboard.png "Dashboard")
 
 ## Tabla de Contenidos
 - [📁 Archivo: `mysql/db.sql`](#📁-archivo-mysqldbsql)
@@ -163,7 +165,4 @@ Funciones auxiliares para operaciones comunes. (opcional)
 * MYSQL: `npm install mysql`
 * MULTER: `npm install multer`
 
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT.
+## Proyecto hecho por Pablo Torrez
