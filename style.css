@@ -6,10 +6,20 @@
 
 html {
     color-scheme: light!important;
+    scroll-behavior: smooth;
 }
 
 :root{
     color-scheme: light!important;
+}
+
+.loader {
+    border-top-color: transparent;
+    border-radius: 50%;
+}
+
+.hidden {
+    display: none;
 }
 
 body {
@@ -51,6 +61,31 @@ button {
     cursor: pointer;
     border: none;
 }
+
+#user-logged{
+    /* box-shadow: 4px 2px 1vmax rgba(49, 0, 141); */
+    animation:  shadow 3s ease-in-out infinite;
+    /* background: linear-gradient(to right, rgb(20, 20, 24), rgb(19, 20, 24)); */
+    /* color: white;
+    border-radius: 20px;
+    padding: 0.5em;
+    font-size: 1em;
+    font-weight: 700; */
+}
+
+@keyframes shadow {
+    0% {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgb(111, 0, 255);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+}
+
+
 
 #color-picker{
     display: flex;
@@ -97,9 +132,9 @@ button {
     transition: box-shadow 0.3s ease-in-out;
 }
 
-#add-task:hover {
+/* #add-task:hover {
     box-shadow: 0 0 10px rgb(70, 43, 226);
-}
+} */
 
 .content-text {
     text-align: center;
@@ -221,16 +256,31 @@ button {
 @media (max-width: 1200px){
 
     header ul {
-        gap: 0px;
+        gap: 5px;
+        justify-content: center;
     }
 
     header ul > li{
         font-size: 0.8em;
     }
 
+    .menu :where(li:not(.menu-title) > :not(ul, details, .menu-title, .btn)) {
+        padding-left: .5rem!important;
+        padding-right: .5rem!important;
+    }
+
+    header ul>li:last-of-type {
+        width: 100%;
+    }
+
     .container-main-task{
         grid-template-columns: repeat(3, 1fr);
     }
+
+    #sct-auth{
+        flex-direction: column;
+    }
+
 }
 
 @media (max-width: 992px) {
@@ -259,6 +309,7 @@ button {
 }
 
 @media (max-width: 480px) {
+
     .container-main-task {
         grid-template-columns: 1fr;
     }
