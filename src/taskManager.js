@@ -1,4 +1,3 @@
-
 import { API_URL } from "../api/rutas.js";
 
 export class TaskManager {
@@ -18,11 +17,24 @@ export class TaskManager {
     if (this.edicionTaskId !== null) {
       const task = this.tasks.find(task => task.id === this.edicionTaskId);
       if (task) {
-        task.name = name; 
+        task.name = name;
         task.color = color;
         task.userId = userId;
+
+        await axios.put(`${API_URL}/tasks/${this.edicionTaskId}`, {
+          name: task.name,
+          color: task.color,
+          completed: task.completed
+        })
+          .then(res => {
+            console.log(res.data.message);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+
+        this.edicionTaskId = null;
       }
-      this.edicionTaskId = null;
     } else {
       const task = {
         id: this.tasks.length + 1,
@@ -32,20 +44,42 @@ export class TaskManager {
         userId
       };
       this.tasks.push(task);
+      await this.saveTasks(name, color, userId);
     }
-    await this.saveTasks(name,color,userId);
     this.renderTasks();
   }
 
-  toggleTaskCompletion(id) {
+  async toggleTaskCompletion(id) {
     const task = this.tasks.find(task => task.id === id);
     if (task) {
       task.completed = !task.completed;
+
+      await axios.put(`${API_URL}/tasks/${id}`, {
+        name: task.name,
+        color: task.color,
+        completed: task.completed
+      })
+        .then(res => {
+          console.log("Tarea actualizada en el servidor: ", res.data.message);
+        })
+        .catch(err => {
+          console.error("Error al actualizar la tarea: ", err);
+        });
+
+      this.renderTasks();
     }
   }
 
   deleteTask(id) {
-    this.tasks = this.tasks.filter(task => task.id !== id);
+    axios.delete(`${API_URL}/tasks/${id}`)
+      .then(res => {
+        console.log("Tarea eliminada del servidor: ", res.data.message);
+        this.tasks = this.tasks.filter(task => task.id !== id);
+        this.renderTasks();
+      })
+      .catch(err => {
+        console.error("Error al eliminar la tarea: ", err);
+      });
   }
 
   editTask(id) {
@@ -97,13 +131,11 @@ export class TaskManager {
     taskList.appendChild(containerMainTask);
 
     this.tasks.forEach(task => {
-
-      // console.log("Datos de la tarea: ", task);
       if (!task.id || !task.name || !task.color) {
         console.error("Datos inválidos en la tarea:", task);
         return;
       }
-      
+
       const { id, name, color, completed } = task;
 
       if (!id || !name || !color) {
@@ -115,12 +147,10 @@ export class TaskManager {
       containerTasksGrid.classList.add("task-container-grid");
       containerMainTask.appendChild(containerTasksGrid);
 
-
       const containerTasks = document.createElement('div');
       containerTasks.id = `${id}`;
       containerTasks.classList.add("task-container");
       containerTasksGrid.appendChild(containerTasks);
-
 
       const containerButtons = document.createElement('div');
       containerButtons.classList.add("container-buttons-task");
@@ -163,14 +193,13 @@ export class TaskManager {
   }
 
   async saveTasks(name, color, userId) {
-
     const taskData = { name, color, userId };
     if (this.edicionTaskId !== null) {
       // actualizo tarea existente
       await axios.put(`${API_URL}/tasks/${this.edicionTaskId}`, taskData)
         .then(res => console.log(res.data.message))
         .catch(err => console.error(err));
-      
+
       this.edicionTaskId = null;
     } else {
       await axios.post(`${API_URL}/tasks`, taskData)
@@ -179,15 +208,7 @@ export class TaskManager {
     }
 
     this.renderTasks();
-
-    // return new Promise((resolve) => {
-    //   setTimeout(() => {
-    //     console.log("Tasks saved!");
-    //     resolve();
-    //   }, 500);
-    // });
   }
-
 
   async loadTasks(userId) {
     if (!userId) {
@@ -197,10 +218,10 @@ export class TaskManager {
 
     try {
       const response = await axios.get(`${API_URL}/tasks/${userId}`);
-      console.log("Datos recibidos del servidor: ", response.data); 
-      if (response.data.success) { 
+      console.log("Datos recibidos del servidor: ", response.data);
+      if (response.data.success) {
         this.tasks = response.data.tasks;
-        console.log("Tareas a renderizar: ",this.tasks)
+        console.log("Tareas a renderizar: ", this.tasks);
         this.renderTasks();
       } else {
         console.error("Error al cargar tareas: ", response.data.message);
@@ -211,10 +232,9 @@ export class TaskManager {
 
     return new Promise((resolve) => {
       setTimeout(() => {
-        console.log('tasks loades!')
-        resolve(this.tasks)
-      }, 500)
-    })
+        console.log('tasks loaded!');
+        resolve(this.tasks);
+      }, 500);
+    });
   }
-
 }

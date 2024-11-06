@@ -1,26 +1,13 @@
 # 🚀 Proyecto: Sistema de Gestión de Tareas con Autenticación de Usuarios
 
-Este sistema es una aplicación MERN Stack que permite la gestión de tareas y usuarios mediante autenticación. Se utiliza **Node.js**, **Express**, **MySQL**, **Axios**, **CORS** y **localStorage** para el manejo de la base de datos, autenticación y almacenamiento en el lado del cliente.
+Este sistema es una aplicación MEJN Stack que permite la gestión de tareas y usuarios mediante autenticación. Se utiliza **JavaScript Vanilla**, **Node.js**, **Express**, **MySQL**, **Axios**, **CORS** y **localStorage** para el manejo de la base de datos, autenticación y almacenamiento en el lado del cliente.
 
 ## Imágen del Proyecto
 ![alt text](src/img/main.png "Principal")
 ![alt text](src/img/auth.png "Login")
 ![alt text](src/img/dashboard.png "Dashboard")
 
-## Tabla de Contenidos
-- [📁 Archivo: `mysql/db.sql`](#📁-archivo-mysqldbsql)
-- [📁 Archivo: `backend/server.js`](#📁-archivo-backendserverjs)
-- [📁 Archivo: `src/historyObj.js`](#📁-archivo-srchistoryobjjs)
-- [📁 Archivo: `src/loader.js`](#📁-archivo-srcloaderjs)
-- [📁 Archivo: `src/logoutbutton.js`](#📁-archivo-srclogoutbuttonjs)
-- [📁 Archivo: `src/main.js`](#📁-archivo-srcmainjs)
-- [📁 Archivo: `src/registro.js`](#📁-archivo-srcregistrojs)
-- [📁 Archivo: `src/taskManager.js`](#📁-archivo-srctaskmanagerjs)
-- [📁 Archivo: `src/userLogged.mjs`](#📁-archivo-srcuserloggedmjs)
-- [📁 Archivo: `src/userManager.js`](#📁-archivo-srcusermanagerjs)
-- [📁 Archivo: `src/utils.js`](#📁-archivo-srcutilsjs)
-
-## Características del Proyecto:
+## Características técnicas del Proyecto:
 - Basic Syntax: Toda la lógica básica de la aplicación estará escrita en JavaScript moderno, utilizando la sintaxis más reciente.
 
 - Events: Implementarás eventos para manejar interacciones del usuario, como hacer clic en botones para agregar nuevas tareas, marcar tareas como completadas, y cambiar entre diferentes vistas.
@@ -73,6 +60,18 @@ La base de datos contiene una tabla `USUARIOS` que almacena los datos de los usu
 Se utiliza un esquema sencillo para registrar usuarios en la tabla y probar la funcionalidad de registro y autenticación.
 
 ---
+
+## 📁 Archivo: `api/rutas.js`
+
+En esta carpeta están almacenadas variables de rutas de la api
+
+## 📁 Archivo: `backend/debugger/solicitud.js`
+
+Este archivo sirve para hacer depuración por si hay alguna falla en el código. Es totalmente independiente de todo el proyecto. Se puede editar si se requiere.
+
+## 📁 Archivo: `backend/uploads`
+
+En esta carpeta se almacenan los íconos (fotos de perfil) de cada usuario cuando se registra por primera vez.
 
 ## 📁 Archivo: `backend/server.js`
 
@@ -164,5 +163,7 @@ Funciones auxiliares para operaciones comunes. (opcional)
 * AXIOS: `npm install axios`
 * MYSQL: `npm install mysql`
 * MULTER: `npm install multer`
+* FS: `npm install fs`
+* PATH: `npm install path`
 
-## Proyecto hecho por Pablo Torrez
+## Proyecto hecho por [Pablo Torrez](https://wwww.github.com/pblnahu1/)
