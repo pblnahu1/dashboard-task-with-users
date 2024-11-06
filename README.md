@@ -1,7 +1,7 @@
 # 🚀 Proyecto: Sistema de Gestión de Tareas con Autenticación de Usuarios
 
-Este sistema utiliza en dos ramas versiones muy diferentes: 
-- En la rama `main` y `version_db` implementé MEJN Stack: **JavaScript Vanilla**, **Node.js**, **Express**, **MySQL** con **Axios**, **CORS** y **localStorage** para el manejo de la base de datos, autenticación y almacenamiento en el lado del cliente.
+Este sistema utiliza, en dos ramas, versiones muy diferentes: 
+- En la rama `version_db` implementé MEJN Stack: **JavaScript Vanilla**, **Node.js**, **Express**, **MySQL** con **Axios**, **CORS** y **localStorage** para el manejo de la base de datos, autenticación y almacenamiento en el lado del cliente.
 - Luego, en la rama `version_supabase`, usé: **JavaScript Vanilla**, **Node.js**, **Express**, **SUPABASE** (alternativa a Firebase, usa PostgreSQL) con **CORS** y **localStorage**.
 - Para los estilos usé TailwindCSS en complemento con Daisy.ui
 
@@ -152,7 +152,7 @@ Funciones auxiliares para operaciones comunes. (opcional)
 ---
 
 ## Instalaciones / Dependencias
-### Ramas `main` y `version_db`
+### Rama `version_db`
 * CORS: `npm install cors`
 * EXPRESS: `npm install express`
 * AXIOS: `npm install axios`
@@ -171,7 +171,7 @@ Funciones auxiliares para operaciones comunes. (opcional)
 * NODEMON: `npm install nodemon`
 
 # Breve resumen
-- Básicamente la diferencia de ambas ramas es que en una uso MySQL con Axios y en la otra rama me manejo sin ellos, directamente con la API de Supabase. (express uso para manejar el servidor en ambas ramas)
+- Básicamente la diferencia de `version_db` es que uso MySQL con Axios y en la otra rama `version_supabase` me manejo sin ellos, directamente con la API de Supabase. (express uso para manejar el servidor en ambas ramas)
 
 
 ## Proyecto hecho por [Pablo Torrez](https://wwww.github.com/pblnahu1/)
