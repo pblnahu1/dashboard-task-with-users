@@ -1,6 +1,9 @@
 # 🚀 Proyecto: Sistema de Gestión de Tareas con Autenticación de Usuarios
 
-Este sistema es una aplicación MEJN Stack que permite la gestión de tareas y usuarios mediante autenticación. Se utiliza **JavaScript Vanilla**, **Node.js**, **Express**, **MySQL**, **Axios**, **CORS** y **localStorage** para el manejo de la base de datos, autenticación y almacenamiento en el lado del cliente.
+Este sistema utiliza en dos ramas versiones muy diferentes: 
+- En la rama `main` y `version_db` implementé MEJN Stack: **JavaScript Vanilla**, **Node.js**, **Express**, **MySQL** con **Axios**, **CORS** y **localStorage** para el manejo de la base de datos, autenticación y almacenamiento en el lado del cliente.
+- Luego, en la rama `version_supabase`, usé: **JavaScript Vanilla**, **Node.js**, **Express**, **SUPABASE** (alternativa a Firebase, usa PostgreSQL) con **CORS** y **localStorage**.
+- Para los estilos usé TailwindCSS en complemento con Daisy.ui
 
 ## Imágen del Proyecto
 ![alt text](src/img/main.png "Principal")
@@ -35,15 +38,6 @@ Este sistema es una aplicación MEJN Stack que permite la gestión de tareas y u
 - Listado de tareas donde se puede marcar como completadas o eliminarlas.
 - Posibilidad de editar tareas existentes.
 - Gestión de Usuarios (Opcional): Implementación de un sistema simple de usuarios para asignar tareas y ver progreso individual.
-
-## Paso a Paso:
-- Configurar el entorno de desarrollo.
-- Crear la estructura básica de HTML y enlazar archivos JavaScript.
-- Desarrollar el módulo de gestión de tareas con clases y objetos.
-- Implementar la funcionalidad de eventos y manipulación del DOM.
-- Utilizar promesas y async/await para simular operaciones asíncronas.
-- Dividir la lógica en módulos y utilizar imports/exports.
-- Estilizar la aplicación con CSS o TailwindCSS/DaisyUI.
 
 ---
 
@@ -158,6 +152,7 @@ Funciones auxiliares para operaciones comunes. (opcional)
 ---
 
 ## Instalaciones / Dependencias
+### Ramas `main` y `version_db`
 * CORS: `npm install cors`
 * EXPRESS: `npm install express`
 * AXIOS: `npm install axios`
@@ -165,5 +160,18 @@ Funciones auxiliares para operaciones comunes. (opcional)
 * MULTER: `npm install multer`
 * FS: `npm install fs`
 * PATH: `npm install path`
+
+### Rama `version_supabase`
+* CORS: `npm install cors`
+* EXPRESS: `npm install express`
+* MULTER: `npm install multer`
+* FS: `npm install fs`
+* PATH: `npm install path`
+* SUPABASE: `npm install @supabase/supabase-js`
+* NODEMON: `npm install nodemon`
+
+# Breve resumen
+- Básicamente la diferencia de ambas ramas es que en una uso MySQL con Axios y en la otra rama me manejo sin ellos, directamente con la API de Supabase. (express uso para manejar el servidor en ambas ramas)
+
 
 ## Proyecto hecho por [Pablo Torrez](https://wwww.github.com/pblnahu1/)

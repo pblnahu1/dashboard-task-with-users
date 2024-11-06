@@ -1,4 +1,10 @@
-import { API_URL } from "../api/rutas.js";
+import { API_KEY_SUPABASE } from '../api/rutas.js';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js';
+
+// Supabase
+const supabaseUrl = 'https://bbjrnmzufjjhqxgrstzb.supabase.co';
+const supabaseKey = API_KEY_SUPABASE;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export class TaskManager {
   constructor() {
@@ -21,31 +27,37 @@ export class TaskManager {
         task.color = color;
         task.userId = userId;
 
-        await axios.put(`${API_URL}/tasks/${this.edicionTaskId}`, {
-          name: task.name,
-          color: task.color,
-          completed: task.completed
-        })
-          .then(res => {
-            console.log(res.data.message);
-          })
-          .catch(err => {
-            console.error(err);
-          });
+        const { error } = await supabase
+          .from('tareas')
+          .update({ nombre: name, color, completado: task.completed })
+          .eq('id_tarea', this.edicionTaskId);
+
+        if (error) {
+          console.error("Error al actualizar la tarea:", error.message);
+        } else {
+          console.log("Tarea actualizada con éxito.");
+        }
 
         this.edicionTaskId = null;
       }
     } else {
       const task = {
-        id: this.tasks.length + 1,
         name,
         color: color || '#ffffff',
         completed: false,
         userId
       };
-      this.tasks.push(task);
-      await this.saveTasks(name, color, userId);
+      const { data, error } = await supabase
+        .from('tareas')
+        .insert([{ nombre: name, color, completado: false, id_usuario: userId }]);
+
+      if (error) {
+        console.error("Error al crear la tarea:", error.message);
+      } else {
+        console.log("Tarea creada con éxito:", data);
+      }
     }
+
     this.renderTasks();
   }
 
@@ -54,32 +66,34 @@ export class TaskManager {
     if (task) {
       task.completed = !task.completed;
 
-      await axios.put(`${API_URL}/tasks/${id}`, {
-        name: task.name,
-        color: task.color,
-        completed: task.completed
-      })
-        .then(res => {
-          console.log("Tarea actualizada en el servidor: ", res.data.message);
-        })
-        .catch(err => {
-          console.error("Error al actualizar la tarea: ", err);
-        });
+      const { error } = await supabase
+        .from('tareas')
+        .update({ completado: task.completed })
+        .eq('id_tarea', id);
+
+      if (error) {
+        console.error("Error al actualizar el estado de la tarea:", error.message);
+      } else {
+        console.log("Estado de la tarea actualizado con éxito.");
+      }
 
       this.renderTasks();
     }
   }
 
-  deleteTask(id) {
-    axios.delete(`${API_URL}/tasks/${id}`)
-      .then(res => {
-        console.log("Tarea eliminada del servidor: ", res.data.message);
-        this.tasks = this.tasks.filter(task => task.id !== id);
-        this.renderTasks();
-      })
-      .catch(err => {
-        console.error("Error al eliminar la tarea: ", err);
-      });
+  async deleteTask(id) {
+    const { error } = await supabase
+      .from('tareas')
+      .delete()
+      .eq('id_tarea', id);
+
+    if (error) {
+      console.error("Error al eliminar la tarea:", error.message);
+    } else {
+      console.log("Tarea eliminada con éxito.");
+      this.tasks = this.tasks.filter(task => task.id !== id);
+      this.renderTasks();
+    }
   }
 
   editTask(id) {
@@ -90,7 +104,7 @@ export class TaskManager {
     }
   }
 
-  renderTasks() {
+  async renderTasks() {
     const taskList = document.getElementById("tasks");
     const contentText = document.getElementById("text_tareas");
     const pendingTasks = document.getElementById("pending-tasks");
@@ -103,17 +117,7 @@ export class TaskManager {
         contentText.innerHTML = `Completá, Editá y Eliminá tus tareas`;
         if (pendingTasks) {
           pendingTasks.textContent = `Tienes ${this.tasks.length} ${this.tasks.length === 1 ? 'tarea' : 'tareas'} ${this.tasks.length === 1 ? 'pendiente' : 'pendientes'}`;
-        } else {
-          console.log("El elemento de pendientes de tareas no existe");
         }
-      }
-    } else {
-      if (taskList === null) {
-        console.log("La lista de tareas no existe");
-      }
-
-      if (contentText === null) {
-        console.log("El elemento de texto para las tareas no existe");
       }
     }
 
@@ -137,11 +141,6 @@ export class TaskManager {
       }
 
       const { id, name, color, completed } = task;
-
-      if (!id || !name || !color) {
-        console.error(`La tarea con ID ${id} tiene datos indefinidos.`);
-        return;
-      }
 
       const containerTasksGrid = document.createElement('div');
       containerTasksGrid.classList.add("task-container-grid");
@@ -169,7 +168,6 @@ export class TaskManager {
       toggleButton.textContent = completed ? 'Completado ✅' : 'Completar 🔥';
       toggleButton.addEventListener('click', () => {
         this.toggleTaskCompletion(id);
-        this.renderTasks();
       });
 
       const editButton = document.createElement('button');
@@ -182,7 +180,6 @@ export class TaskManager {
       deleteButton.textContent = 'Borrar ❌';
       deleteButton.addEventListener("click", () => {
         this.deleteTask(id);
-        this.renderTasks();
       });
 
       containerButtons.appendChild(toggleButton);
@@ -192,42 +189,31 @@ export class TaskManager {
     });
   }
 
-  async saveTasks(name, color, userId) {
-    const taskData = { name, color, userId };
-    if (this.edicionTaskId !== null) {
-      // actualizo tarea existente
-      await axios.put(`${API_URL}/tasks/${this.edicionTaskId}`, taskData)
-        .then(res => console.log(res.data.message))
-        .catch(err => console.error(err));
-
-      this.edicionTaskId = null;
-    } else {
-      await axios.post(`${API_URL}/tasks`, taskData)
-        .then(res => console.log(res.data.message))
-        .catch(err => console.error(err));
-    }
-
-    this.renderTasks();
-  }
-
   async loadTasks(userId) {
     if (!userId) {
-      console.error("El userId no es válido: ", userId);
+      console.error("El userId no es válido:", userId);
       return;
     }
 
     try {
-      const response = await axios.get(`${API_URL}/tasks/${userId}`);
-      console.log("Datos recibidos del servidor: ", response.data);
-      if (response.data.success) {
-        this.tasks = response.data.tasks;
-        console.log("Tareas a renderizar: ", this.tasks);
-        this.renderTasks();
+      const { data, error } = await supabase
+        .from('tareas')
+        .select('id_tarea, nombre, color, completado')
+        .eq('id_usuario', userId);
+
+      if (error) {
+        console.error("Error al cargar tareas:", error.message);
       } else {
-        console.error("Error al cargar tareas: ", response.data.message);
+        this.tasks = data.map(task => ({
+          id: task.id_tarea,
+          name: task.nombre,
+          color: task.color,
+          completed: task.completado
+        }));
+        this.renderTasks();
       }
     } catch (error) {
-      console.error("Error en la solicitud de tareas: ", error);
+      console.error("Error al cargar las tareas:", error.message);
     }
 
     return new Promise((resolve) => {
