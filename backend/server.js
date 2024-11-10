@@ -11,7 +11,12 @@ import express from 'express'
 import cors from 'cors'
 import multer from 'multer'
 import fs from 'fs'
-import path from 'path'
+import path, {dirname} from 'path'
+import { fileURLToPath } from 'url'
+
+// hago esto por el tipo (type:module)
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const app = express()
 
@@ -73,7 +78,7 @@ if (!fs.existsSync(paths.pUploadsConfigMulter)) {
 
 
 // ruta estática
-app.use(paths.pUploads, express.static('/uploads'))
+app.use(paths.pUploads, express.static(path.join(__dirname, 'uploads')))
 
 
 
