@@ -7,27 +7,6 @@ Este sistema es una aplicación MEJN Stack que permite la gestión de tareas y u
 ![alt text](src/img/auth.png "Login")
 ![alt text](src/img/dashboard.png "Dashboard")
 
-## Características técnicas del Proyecto:
-- Basic Syntax: Toda la lógica básica de la aplicación estará escrita en JavaScript moderno, utilizando la sintaxis más reciente.
-
-- Events: Implementarás eventos para manejar interacciones del usuario, como hacer clic en botones para agregar nuevas tareas, marcar tareas como completadas, y cambiar entre diferentes vistas.
-
-- Variables (let & const): Utilizarás let y const adecuadamente para manejar variables de estado y constantes en tu código.
-
-- Template Literals: Generarás HTML dinámico utilizando template literals para insertar variables y expresiones directamente en las cadenas de texto.
-
-- Arrow Functions: Utilizarás funciones flecha para crear funciones anónimas y callbacks en eventos y promesas.
-
-- Spread/Rest Operators: Implementarás el operador spread/rest para manejar arrays y objetos, como en la copia de listas de tareas o la combinación de propiedades de un objeto.
-
-- Object/Array Destructuring: Desestructurarás objetos y arrays para acceder fácilmente a las propiedades y valores que necesitas en tu lógica de negocio.
-
-- Class and Objects: Diseñarás clases para manejar la lógica de las tareas y usuarios, utilizando objetos para representar cada entidad. 
-
-- Module Imports/Exports: Dividirás el código en módulos, utilizando import y export para organizar tu aplicación en diferentes archivos.
-
-- Promises, async/await: Implementarás promesas y async/await para manejar operaciones asíncronas, como la simulación de guardar tareas en una base de datos o consultar datos de un servidor.
-
 ## Estructura del Proyecto:
 
 - Pantalla Principal: Un dashboard donde se muestran las tareas pendientes y completadas, con un resumen del progreso.
