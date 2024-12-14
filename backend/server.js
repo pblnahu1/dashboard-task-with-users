@@ -1,5 +1,5 @@
 
-import { PORT, API_URL, API_KEY_SUPABASE } from '../api/rutas.js'
+import { PORT, API_URL, API_KEY_SUPABASE } from '../backend/api/rutas.js'
 
 import { createClient } from '@supabase/supabase-js'
 
